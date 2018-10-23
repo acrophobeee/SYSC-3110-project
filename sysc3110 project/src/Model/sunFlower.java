@@ -1,21 +1,33 @@
 package Model;
 public class sunFlower extends abstractPlants{
 	
-	private int sp;//sun points
+	private int sp = 0;
 
 	public sunFlower() {
 		//name,cost,hp,damage,cd
-		super("sun flower", 3, 50, 0, 3);
+		super("sun flower", 50, 50, 0, 3);
+		this.sp = sp;
 		// TODO Auto-generated constructor stub
 	}
 	
-	public int generate() {
+	public boolean generate() {
 		int i = this.getCd();
 		if (i == 3) {
-			sp ++;
 			i=0;
+			return true;
 		}
 		i++;
+		return false;
+	}
+	
+	public int generateSun() {
+		if (generate()) {
+			sp += 25;
+		}
+		return sp;
+	}
+	
+	public int getSp() {
 		return sp;
 	}
 }

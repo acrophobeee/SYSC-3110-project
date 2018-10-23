@@ -3,7 +3,7 @@ public class peanShooter extends abstractPlants{
 
 	public peanShooter() {
 		//name, cost, hp, atk, cd
-		super("pean shooter",5,100,25,2);
+		super("pean shooter",100,100,25,2);
 		// TODO Auto-generated constructor stub
 	}
 	
