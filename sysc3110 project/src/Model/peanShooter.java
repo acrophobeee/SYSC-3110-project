@@ -1,4 +1,4 @@
-
+package Model;
 public class peanShooter extends abstractPlants{
 
 	public peanShooter() {

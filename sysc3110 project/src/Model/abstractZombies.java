@@ -1,3 +1,4 @@
+package Model;
 
 public abstract class abstractZombies extends model{
 

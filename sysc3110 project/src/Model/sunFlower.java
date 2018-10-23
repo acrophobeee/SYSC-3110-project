@@ -1,4 +1,4 @@
-
+package Model;
 public class sunFlower extends abstractPlants{
 	
 	private int sp;//sun points
