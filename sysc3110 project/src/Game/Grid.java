@@ -5,54 +5,45 @@ import Model.*;
 
 public class Grid {
 
-	private model[][] map;
+  final private int gridHeight = 5;
+  final private int gridLength = 10;
+  private Model[][] map;
 
-	public Grid() {
-		map = new model[5][10];
-	}
+  public Grid() {
+    map = new Model[this.gridHeight][this.gridLength];
+  }
 
-	public void clearMap() {
-		for (int i =0; i<5; i++) {
-			for (int j = 0; j<10; j++) {
-				map[i][j] = null;
-			}
-		}
-	}
+  public void clearMap() {
+    for (int i =0; i<5; i++) {
+      for (int j = 0; j<10; j++) {
+        map[i][j] = null;
+      }
+    }
+  }
 
-	public void addModel(model model,int x, int y) {
-		map[x][y] = model;
-	}
+  public int getHeight() {
+    return gridHeight;
+  }
 
-	public void removeModel(model model, int x, int y) {
-		map[x][y] = null;
-	}
+  public int getLength() {
+    return gridHeight;
+  }
 
-	public void spawnZombie() {
-		int r = (new Random()).nextInt(4)+1;
-		fastZombies fz = new fastZombies();
-		addModel(fz, 9, r);
-	}
+  public void addModel(Model model,int i, int j) {
+    map[i][j] = model;
+  }
 
-	public boolean isGameOver() {
-		for (int i =0 ; i<5; i++) {
-			if (map[i][0] instanceof abstractZombies) {
-				return true;
-			}
-		}
-		return false;
-	}
+  public void removeModel(Model model, int i, int j) {
+    map[i][j] = null;
+  }
 
-	public void updateGrid() {
-		if (!isGameOver()) {
-			for(int i = 0; i<5; i++) {
-				for (int j = 0; j<10; j++) {
-					model model = map[i][j];
-					if (model instanceof sunFlower) {
-						sunFlower s = (sunFlower)model;
-						s.generateSun();
-					}
-				}
-			}
-		}
-	}
+  public Model getModel(int i, int j) {
+    // TODO validate the i, j
+    return this.map[i][j];
+  }
+
+  public void shiftModel(Model model, int i, int j) {
+    // TODO shift model to the left
+    // Used to move zombies forward
+  }
 }
