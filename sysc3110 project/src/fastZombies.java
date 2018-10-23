@@ -6,7 +6,7 @@ public class fastZombies extends abstractZombies{
 		super("fast zombie",100,10,2,2);
 	}
 	
-	public int attack(model plant) {
+	public void attack(model plant) {
 		int i = this.getCd();
 		if (i == 2) {
 			int tempHp = plant.getHp() - this.getAtk();
@@ -14,6 +14,5 @@ public class fastZombies extends abstractZombies{
 			plant.setHp(tempHp);
 		}
 		i++;
-		return plant.getHp();
 	}
 }
