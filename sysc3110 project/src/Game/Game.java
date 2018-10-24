@@ -30,7 +30,7 @@ public class Game {
 
           } else if (model instanceof peanShooter) {
             peanShooterAction((peanShooter) model, i, j);
-            
+
           } else if (model instanceof bullet) {
         	  //Check if the bullet hit zombie
         	  // - Attack
@@ -67,14 +67,14 @@ public class Game {
       }
     }
   }
-  
+
   private void bulletAction(bullet b, int i, int j) {
 	  if (this.board.getModel(i, j+1) instanceof abstractZombies) {
 		  b.attack(this.board.getModel(i, j+1));
 	  }
 	  this.board.shiftModel(b, i, j);
   }
-  
+
   private void zombieAction(fastZombies z, int i, int j) {
 	  if (this.board.getModel(i, j-1) instanceof abstractPlants) {
 		  z.attack(this.board.getModel(i, j-1));
