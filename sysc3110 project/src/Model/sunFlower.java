@@ -1,6 +1,6 @@
 package Model;
 public class sunFlower extends abstractPlants{
-	
+
 	private int sp = 0;
 
 	public sunFlower() {
@@ -9,7 +9,7 @@ public class sunFlower extends abstractPlants{
 		this.sp = sp;
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public boolean generate() {
 		int i = this.getCd();
 		if (i == 3) {
@@ -19,14 +19,14 @@ public class sunFlower extends abstractPlants{
 		i++;
 		return false;
 	}
-	
+
 	public int generateSun() {
 		if (generate()) {
 			sp += 25;
 		}
 		return sp;
 	}
-	
+
 	public int getSp() {
 		return sp;
 	}
