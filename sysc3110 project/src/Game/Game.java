@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.Random;
 import java.util.Scanner;
 import Model.*;
 
@@ -16,7 +17,7 @@ public class Game {
   public void gameLoop() {
     while(true) {
       // Check if zombies have hit
-      if (this.board.isGameOver()) {
+      if (this.isGameOver()) {
         return;
       }
 
@@ -29,6 +30,12 @@ public class Game {
 
           } else if (model instanceof peanShooter) {
             peanShooterAction((peanShooter) model, i, j);
+            
+          } else if (model instanceof bullet) {
+        	  //Check if the bullet hit zombie
+        	  // - Attack
+        	  //Otherwise, move forward
+        	  bulletAction((bullet)model,i,j);
 
           } else if (model instanceof abstractZombies) {
             // TODO impliment this
@@ -37,6 +44,7 @@ public class Game {
             // Otherwise
             //   - Zombies shoudl move forward
             //   - this.grid.shiftModel(model, i, j)
+        	  zombieAction((fastZombies)model,i,j);
           }
         }
       }
@@ -51,18 +59,33 @@ public class Game {
   }
 
   private void peanShooterAction(peanShooter s, int i, int j) {
-    for (int j = j ; j < this.board.getLength(); j++) {
+    for (int k = j ; k < this.board.getLength(); k++) {
       // Damage the first zombie it finds
-      if (this.board.getModel(i, j) instanceof abstractZombies) {
+      if (this.board.getModel(i, k) instanceof abstractZombies) {
         // TODO
+    	  s.shoot();
       }
     }
+  }
+  
+  private void bulletAction(bullet b, int i, int j) {
+	  if (this.board.getModel(i, j+1) instanceof abstractZombies) {
+		  b.attack(this.board.getModel(i, j+1));
+	  }
+	  this.board.shiftModel(b, i, j);
+  }
+  
+  private void zombieAction(fastZombies z, int i, int j) {
+	  if (this.board.getModel(i, j-1) instanceof abstractPlants) {
+		  z.attack(this.board.getModel(i, j-1));
+	  }
+	  this.board.shiftModel(z, i, j);
   }
 
   private void spawnZombie() {
     int r = (new Random()).nextInt(4)+1;
     fastZombies fz = new fastZombies();
-    this.board.addModel(fz, 9, r);
+    this.board.addModel(fz, r, 9);
   }
 
   private boolean isGameOver() {

@@ -1,6 +1,6 @@
 package Model;
 
-public abstract class abstractZombies extends model{
+public abstract class abstractZombies extends Model{
 
 	private int speed;
 	

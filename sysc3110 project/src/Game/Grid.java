@@ -26,7 +26,7 @@ public class Grid {
   }
 
   public int getLength() {
-    return gridHeight;
+    return gridLength;
   }
 
   public void addModel(Model model,int i, int j) {
@@ -45,5 +45,16 @@ public class Grid {
   public void shiftModel(Model model, int i, int j) {
     // TODO shift model to the left
     // Used to move zombies forward
+	// Used to move bullet forward
+	  for (int a = j; a>=0; a--) {
+		  if (model instanceof abstractZombies) {
+			  shiftModel(model,i,a-1);
+		  }
+	  }
+	  for (int b = j; b<this.gridLength; b++) {
+		  if (model instanceof bullet) {
+			  shiftModel(model,i,b+1);
+		  }
+	  }
   }
 }

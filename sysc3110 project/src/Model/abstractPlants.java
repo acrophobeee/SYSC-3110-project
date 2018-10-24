@@ -1,6 +1,6 @@
 package Model;
 
-public abstract class abstractPlants extends model{
+public abstract class abstractPlants extends Model{
 
 	private int cost;
 	
