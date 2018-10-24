@@ -1,18 +1,18 @@
-package Model;
-public class peanShooter extends abstractPlants{
+package model;
+public class PeanShooter extends AbstractPlants{
 
-	public peanShooter() {
+	public PeanShooter() {
 		//name, cost, hp, atk, cd
 		super("pean shooter",100,100,25,2);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public bullet shoot() {
-		bullet bullet = null;
+	public Bullet shoot() {
+		Bullet bullet = null;
 		int i = this.getCd();
 		if (i == 2) {
 			i = 0;
-			bullet = new bullet(this.getAtk(),1);
+			bullet = new Bullet(this.getAtk(),1);
 		}
 		i++;
 		return bullet;

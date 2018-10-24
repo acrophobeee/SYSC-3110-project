@@ -1,14 +1,14 @@
-package Model;
+package model;
 
-public abstract class abstractPlants extends Model{
+public abstract class AbstractPlants extends Model{
 
 	private int cost;
 	
-	public abstractPlants() {
+	public AbstractPlants() {
 		super();
 	}
 
-	public abstractPlants(String name, int cost, int hp, int atk, int cd) {
+	public AbstractPlants(String name, int cost, int hp, int atk, int cd) {
 		super(name,hp,atk,cd);
 		this.cost = cost;
 	}

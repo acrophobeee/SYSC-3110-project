@@ -1,7 +1,8 @@
-package Game;
+package game;
 
 import java.util.Random;
-import Model.*;
+
+import model.*;
 
 public class Grid {
 
@@ -47,12 +48,12 @@ public class Grid {
     // Used to move zombies forward
 	// Used to move bullet forward
 	  for (int a = j; a>=0; a--) {
-		  if (model instanceof abstractZombies) {
+		  if (model instanceof AbstractZombies) {
 			  shiftModel(model,i,a-1);
 		  }
 	  }
 	  for (int b = j; b<this.gridLength; b++) {
-		  if (model instanceof bullet) {
+		  if (model instanceof Bullet) {
 			  shiftModel(model,i,b+1);
 		  }
 	  }

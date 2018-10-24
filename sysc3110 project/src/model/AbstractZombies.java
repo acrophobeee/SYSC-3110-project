@@ -1,14 +1,14 @@
-package Model;
+package model;
 
-public abstract class abstractZombies extends Model{
+public abstract class AbstractZombies extends Model{
 
 	private int speed;
 	
-	public abstractZombies() {
+	public AbstractZombies() {
 		super();
 	}
 
-	public abstractZombies(String name, int hp, int atk, int speed, int cd) {
+	public AbstractZombies(String name, int hp, int atk, int speed, int cd) {
 		super(name,hp,atk, cd);
 		this.speed = speed;
 	}

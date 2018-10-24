@@ -1,15 +1,15 @@
-package Model;
+package model;
 
-public class bullet extends Model{
+public class Bullet extends Model{
 	
-	private abstractPlants plant;
+	private AbstractPlants plant;
 	private int speed;
 	
-	public bullet() {
+	public Bullet() {
 		super();
 	}
 	
-	public bullet(int atk, int speed) {
+	public Bullet(int atk, int speed) {
 		super("bullet",0,atk,0);
 		this.speed = speed;
 	}

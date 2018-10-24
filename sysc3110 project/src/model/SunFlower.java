@@ -1,9 +1,9 @@
-package Model;
-public class sunFlower extends abstractPlants{
+package model;
+public class SunFlower extends AbstractPlants{
 
 	private int sp = 0;
 
-	public sunFlower() {
+	public SunFlower() {
 		//name,cost,hp,damage,cd
 		super("sun flower", 50, 50, 0, 3);
 		this.sp = sp;

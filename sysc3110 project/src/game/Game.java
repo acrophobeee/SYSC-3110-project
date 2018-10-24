@@ -1,8 +1,9 @@
-package Game;
+package game;
 
 import java.util.Random;
 import java.util.Scanner;
-import Model.*;
+
+import model.*;
 
 public class Game {
 
@@ -25,26 +26,26 @@ public class Game {
         for (int j = 0; j<10; j++) {
           Model model = this.board.getModel(i, j);
 
-          if (model instanceof sunFlower) {
-            sunFlowerAction((sunFlower) model);
+          if (model instanceof SunFlower) {
+            sunFlowerAction((SunFlower) model);
 
-          } else if (model instanceof peanShooter) {
-            peanShooterAction((peanShooter) model, i, j);
+          } else if (model instanceof PeanShooter) {
+            peanShooterAction((PeanShooter) model, i, j);
 
-          } else if (model instanceof bullet) {
+          } else if (model instanceof Bullet) {
         	  //Check if the bullet hit zombie
         	  // - Attack
         	  //Otherwise, move forward
-        	  bulletAction((bullet)model,i,j);
+        	  bulletAction((Bullet)model,i,j);
 
-          } else if (model instanceof abstractZombies) {
+          } else if (model instanceof AbstractZombies) {
             // TODO impliment this
             // Check if the zombie should attack
             //   - Attack
             // Otherwise
             //   - Zombies shoudl move forward
             //   - this.grid.shiftModel(model, i, j)
-        	  zombieAction((fastZombies)model,i,j);
+        	  zombieAction((FastZombies)model,i,j);
           }
         }
       }
@@ -54,29 +55,29 @@ public class Game {
   }
 
 
-  private void sunFlowerAction(sunFlower s) {
+  private void sunFlowerAction(SunFlower s) {
     this.sp += s.generateSun();
   }
 
-  private void peanShooterAction(peanShooter s, int i, int j) {
+  private void peanShooterAction(PeanShooter s, int i, int j) {
     for (int k = j ; k < this.board.getLength(); k++) {
       // Damage the first zombie it finds
-      if (this.board.getModel(i, k) instanceof abstractZombies) {
+      if (this.board.getModel(i, k) instanceof AbstractZombies) {
         // TODO
     	  s.shoot();
       }
     }
   }
 
-  private void bulletAction(bullet b, int i, int j) {
-	  if (this.board.getModel(i, j+1) instanceof abstractZombies) {
+  private void bulletAction(Bullet b, int i, int j) {
+	  if (this.board.getModel(i, j+1) instanceof AbstractZombies) {
 		  b.attack(this.board.getModel(i, j+1));
 	  }
 	  this.board.shiftModel(b, i, j);
   }
 
-  private void zombieAction(fastZombies z, int i, int j) {
-	  if (this.board.getModel(i, j-1) instanceof abstractPlants) {
+  private void zombieAction(FastZombies z, int i, int j) {
+	  if (this.board.getModel(i, j-1) instanceof AbstractPlants) {
 		  z.attack(this.board.getModel(i, j-1));
 	  }
 	  this.board.shiftModel(z, i, j);
@@ -84,13 +85,13 @@ public class Game {
 
   private void spawnZombie() {
     int r = (new Random()).nextInt(4)+1;
-    fastZombies fz = new fastZombies();
+    FastZombies fz = new FastZombies();
     this.board.addModel(fz, r, 9);
   }
 
   private boolean isGameOver() {
     for (int i =0 ; i<this.board.getHeight(); i++) {
-      if (this.board.getModel(i, 0) instanceof abstractZombies) {
+      if (this.board.getModel(i, 0) instanceof AbstractZombies) {
         return true;
       }
     }

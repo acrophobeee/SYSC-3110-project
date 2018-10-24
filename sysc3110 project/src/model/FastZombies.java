@@ -1,8 +1,8 @@
-package Model;
+package model;
 
-public class fastZombies extends abstractZombies{
+public class FastZombies extends AbstractZombies{
 
-	public fastZombies() {
+	public FastZombies() {
 		//name,hp,atk,speed,cd
 		super("fast zombie",100,10,2,2);
 	}
