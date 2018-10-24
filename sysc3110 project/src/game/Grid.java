@@ -1,12 +1,18 @@
 package game;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import model.*;
 
 public class Grid {
 
-  final private int gridHeight = 5;
+  @Override
+public String toString() {
+	return "at[	";
+}
+
+final private int gridHeight = 5;
   final private int gridLength = 10;
   private Model[][] map;
 
