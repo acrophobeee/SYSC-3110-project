@@ -1,9 +1,9 @@
 package model;
 
-public abstract class AbstractPlant extends Model{
+public abstract class AbstractPlant extends Model {
 
 	private int cost;
-	
+
 	public AbstractPlant() {
 		super();
 	}
