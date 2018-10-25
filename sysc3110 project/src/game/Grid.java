@@ -54,8 +54,8 @@ final private int gridHeight = 5;
     // Used to move zombies forward
 	// Used to move bullet forward
 	  while(i>0 && j>0 && i<5 && j<10) {
-		  if (model instanceof AbstractZombies) {
-			  j=j-((AbstractZombies)model).getSpeed();
+		  if (model instanceof AbstractZombie) {
+			  j=j-((AbstractZombie)model).getSpeed();
 			  shiftModel(model,i,j);
 		  }
 		  if (model instanceof Bullet) {

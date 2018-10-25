@@ -1,5 +1,5 @@
 package model;
-public class SunFlower extends AbstractPlants{
+public class SunFlower extends AbstractPlant{
 
 	private int sp = 0;
 

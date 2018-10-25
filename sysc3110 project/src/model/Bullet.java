@@ -2,7 +2,7 @@ package model;
 
 public class Bullet extends Model{
 	
-	private AbstractPlants plant;
+	private AbstractPlant plant;
 	private int speed;
 	
 	public Bullet() {
@@ -14,7 +14,7 @@ public class Bullet extends Model{
 		this.speed = speed;
 	}
 	
-	public void attack(Model zombie) {
+	public void attack(AbstractZombie zombie) {
 		int tempHp = zombie.getHp() - plant.getAtk();
 		zombie.setHp(tempHp);
 	}

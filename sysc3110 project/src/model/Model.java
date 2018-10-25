@@ -1,6 +1,6 @@
 package model;
 
-public class Model {
+public abstract class Model {
 
 	private String name; // name of plants/zombies
 	private int hp; // heath point for plants / zombies
