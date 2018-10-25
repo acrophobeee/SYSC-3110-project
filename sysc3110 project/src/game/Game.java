@@ -33,10 +33,9 @@ public class Game {
 
 					if (model instanceof SunFlower) {
 						sunFlowerAction((SunFlower) model);
-						System.out.println("SunFlower" + "["+i+j+"]  ");
+						 System.out.println("SunFlower" + "["+i+j+"]  ");
 					} 
 					else if (model instanceof PeaShooter) {
-						System.out.println("PeaShooter" + "["+i+j+"]  ");
 						peaShooterAction((PeaShooter) model, i, j);
 
 					} else if (model instanceof Bullet) {
@@ -55,8 +54,14 @@ public class Game {
 						zombieAction((FastZombie) model, i, j);
 						System.out.println("fast zombie is at ["+ i +","+ j+ "]\n");			
 					}
-					
+					if (model instanceof SunFlower) {
+					    System.out.println("SunFlower" + "["+i+j+"]  ");
+					    }
+					if (model instanceof PeaShooter) {
+					    System.out.println("PeaShooter" + "["+i+j+"]  ");
+					    }
 				}
+			
 			}
 	      
       System.out.println("Current sun points: " + this.sp);
