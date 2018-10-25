@@ -2,7 +2,7 @@ build:
 	javac */**.java
 
 run: build
-	java Game.Game
+	java game.Game
 
 clean:
 	rm */**.class
