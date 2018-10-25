@@ -72,6 +72,7 @@ public class Grid {
 				j = j + ((Bullet) model).getSpeed();
 				addModel(model, i, j);		
 			}
+			
 		
 	}
 }
