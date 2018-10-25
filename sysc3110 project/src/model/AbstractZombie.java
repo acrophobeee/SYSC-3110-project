@@ -8,8 +8,8 @@ public abstract class AbstractZombie extends Model {
 		super();
 	}
 
-	public AbstractZombie(String name, int hp, int atk, int speed, int cd) {
-		super(name, hp, atk, cd);
+	public AbstractZombie(ModelType type, int hp, int atk, int speed, int cd) {
+		super(type, hp, atk, cd);
 		this.speed = speed;
 	}
 

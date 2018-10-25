@@ -2,7 +2,7 @@ package model;
 
 public abstract class Model {
 
-	private String name; // name of plants/zombies
+	private ModelType type; // name of plants/zombies
 	private int hp; // heath point for plants / zombies
 	private int atk; // attack damage
 	private int cd; // waiting time for plants / zombies' next attack
@@ -12,20 +12,20 @@ public abstract class Model {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Model(String name, int hp, int atk, int cd) {
+	public Model(ModelType type, int hp, int atk, int cd) {
 		super();
-		this.name = name;
+		this.type = type;
 		this.hp = hp;
 		this.atk = atk;
 		this.cd = cd;
 	}
 
-	public String getName() {
-		return name;
+	public ModelType getType() {
+		return type;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setType(ModelType type) {
+		this.type = type;
 	}
 
 	public int getHp() {

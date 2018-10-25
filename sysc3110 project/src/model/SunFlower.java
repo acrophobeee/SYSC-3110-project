@@ -5,7 +5,7 @@ public class SunFlower extends AbstractPlant{
 
 	public SunFlower() {
 		//name,cost,hp,damage,cd
-		super("sun flower", 50, 50, 0, 3);
+		super(ModelType.SUN_FLOWER, 50, 50, 0, 3);
 		this.sp = sp;
 		// TODO Auto-generated constructor stub
 	}
