@@ -33,7 +33,6 @@ public class Game {
 
 					if (model instanceof SunFlower) {
 						sunFlowerAction((SunFlower) model);
-						 System.out.println("SunFlower" + "["+i+j+"]  ");
 					} 
 					else if (model instanceof PeaShooter) {
 						peaShooterAction((PeaShooter) model, i, j);
@@ -89,6 +88,7 @@ public class Game {
 	private void bulletAction(Bullet b, int i, int j) {
 		if (this.board.getModel(i, j + 1) instanceof AbstractZombie) {
 			b.attack((AbstractZombie) this.board.getModel(i, j + 1));
+			System.out.println("bullet attack zombie with attack");
 		}
 		this.board.shiftModel(b, i, j);
 	}
