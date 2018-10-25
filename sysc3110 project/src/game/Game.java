@@ -89,6 +89,7 @@ public class Game {
 		if (this.board.getModel(i, j + 1) instanceof AbstractZombie) {
 			b.attack((AbstractZombie) this.board.getModel(i, j + 1));
 			System.out.println("bullet attack zombie with attack");
+			this.board.removeModel(b, i, j);
 		}
 		this.board.shiftModel(b, i, j);
 	}
@@ -96,8 +97,9 @@ public class Game {
 	private void zombieAction(FastZombie z, int i, int j) {
 		if (this.board.getModel(i, j - 1) instanceof AbstractPlant) {
 			z.attack(this.board.getModel(i, j - 1));
+		}else if (this.board.getModel(i, j-1)==null) {
+			this.board.shiftModel(z, i, j);
 		}
-		this.board.shiftModel(z, i, j);
 	}
 
 	private void spawnZombie() {
