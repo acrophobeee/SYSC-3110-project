@@ -37,12 +37,14 @@ public class Grid {
 	}
 
 	public void addModel(Model model, int i, int j) {
-		map[i][j] = model;
+		
+			map[i][j] = model;	
 	}
 
 	public void removeModel(Model model, int i, int j) {
+		
 		map[i][j] = null;
-	}
+		}	
 
 	public Model getModel(int i, int j) {
 		// TODO validate the i, j
@@ -53,15 +55,23 @@ public class Grid {
 		// TODO shift model to the left
 		// Used to move zombies forward
 		// Used to move bullet forward
-		while (i > 0 && j > 0 && i < 5 && j < 10) {
+		 
 			if (model instanceof AbstractZombie) {
+				removeModel(model,i,j);
+				if(j-((AbstractZombie) model).getSpeed()>0) {
 				j = j - ((AbstractZombie) model).getSpeed();
-				shiftModel(model, i, j);
+				addModel(model, i, j);	
+				}
+				else {
+					addModel(model,i,0);
+				}
 			}
 			if (model instanceof Bullet) {
+				removeModel(model,i,j);
+				if(j+((Bullet) model).getSpeed()<10)
 				j = j + ((Bullet) model).getSpeed();
-				shiftModel(model, i, j);
+				addModel(model, i, j);		
 			}
-		}
+		
 	}
 }

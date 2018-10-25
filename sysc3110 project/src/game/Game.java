@@ -2,7 +2,6 @@ package game;
 
 import java.lang.Integer;
 import java.util.Random;
-import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,21 +19,22 @@ public class Game {
 	}
 
 	public void gameLoop() {
+		spawnZombie();
 		while (true) {
 			// Check if zombies have hit
 			if (this.isGameOver()) {
         System.out.println("Game is Over");
 				return;
 			}
-
+			
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 10; j++) {
 					Model model = this.board.getModel(i, j);
 
 					if (model instanceof SunFlower) {
 						sunFlowerAction((SunFlower) model);
-
-					} else if (model instanceof PeaShooter) {
+					} 
+					else if (model instanceof PeaShooter) {
 						peaShooterAction((PeaShooter) model, i, j);
 
 					} else if (model instanceof Bullet) {
@@ -44,24 +44,30 @@ public class Game {
 						bulletAction((Bullet) model, i, j);
 
 					} else if (model instanceof AbstractZombie) {
-						// TODO impliment this
-						// Check if the zombie should attack
+						// TODO implement this
+						// Check if should attack
 						// - Attack
 						// Otherwise
-						// - Zombies shoudl move forward
+						// should move forward
 						// - this.grid.shiftModel(model, i, j)
 						zombieAction((FastZombie) model, i, j);
+						System.out.println("fast zombie is at ["+ i +","+ j+ "]");			
 					}
+					if (model instanceof SunFlower) {
+					    System.out.println("SunFlower" + "["+i+j+"]  ");
+					    }
+					if (model instanceof PeaShooter) {
+					    System.out.println("PeaShooter" + "["+i+j+"]  ");
+					    }
 				}
+			
 			}
-
-      System.out.println(this.board);
+	      
       System.out.println("Current sun points: " + this.sp);
       System.out.println("");
-
+      
       userAction();
 
-			spawnZombie();
 		}
 	}
 
@@ -129,7 +135,7 @@ public class Game {
     }
 
     this.board.addModel(plant, row, column);
-  }
+ }
 
   private AbstractPlant getPlantFromUser() {
     while (true) {
@@ -187,7 +193,6 @@ public class Game {
 
   private int consoleInputAsInt() {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
     try {
       String input = reader.readLine();
       return Integer.parseInt(input);
