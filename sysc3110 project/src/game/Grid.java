@@ -7,26 +7,26 @@ import model.*;
 
 public class Grid {
 
-	@Override
-	public String toString() {
-		return "at[	";
-	}
+  @Override
+  public String toString() {
+    return "at[	";
+  }
 
-	final private int gridHeight = 5;
-	final private int gridLength = 10;
-	private Model[][] map;
+  final private int gridHeight = 5;
+  final private int gridLength = 10;
+  private Model[][] map;
 
 	public Grid() {
 		map = new Model[this.gridHeight][this.gridLength];
 	}
 
-	public void clearMap() {
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 10; j++) {
-				map[i][j] = null;
-			}
-		}
-	}
+  public void clearMap() {
+    for (int i =0; i<this.getHeight(); i++) {
+      for (int j = 0; j<this.getLength(); j++) {
+        map[i][j] = null;
+      }
+    }
+  }
 
 	public int getHeight() {
 		return gridHeight;
