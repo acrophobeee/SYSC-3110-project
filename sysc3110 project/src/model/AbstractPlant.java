@@ -1,15 +1,15 @@
 package model;
 
-public abstract class AbstractPlant extends Model{
+public abstract class AbstractPlant extends Model {
 
 	private int cost;
-	
+
 	public AbstractPlant() {
 		super();
 	}
 
 	public AbstractPlant(String name, int cost, int hp, int atk, int cd) {
-		super(name,hp,atk,cd);
+		super(name, hp, atk, cd);
 		this.cost = cost;
 	}
 
