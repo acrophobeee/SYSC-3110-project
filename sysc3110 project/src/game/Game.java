@@ -1,5 +1,5 @@
 package game;
-
+// produce by xinyuchen,weihongshen, jacky chiu
 import java.lang.Integer;
 import java.util.Random;
 import java.io.BufferedReader;
@@ -51,13 +51,13 @@ public class Game {
 						// should move forward
 						// - this.grid.shiftModel(model, i, j)
 						zombieAction((FastZombie) model, i, j);
-						System.out.println("fast zombie is at ["+ i +","+ j+ "]");			
+						System.out.println("fast zombie is at ["+ i +","+ j+ "]\n");			
 					}
 					if (model instanceof SunFlower) {
-					    System.out.println("SunFlower" + "["+i+j+"]  ");
+					    System.out.print("SunFlower" + "["+i+j+"]  ");
 					    }
 					if (model instanceof PeaShooter) {
-					    System.out.println("PeaShooter" + "["+i+j+"]  ");
+					    System.out.print("PeaShooter" + "["+i+j+"]  ");
 					    }
 				}
 			
