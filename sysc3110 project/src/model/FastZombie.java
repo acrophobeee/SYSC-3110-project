@@ -3,8 +3,9 @@ package model;
 public class FastZombie extends AbstractZombie {
 
 	public FastZombie() {
-		// name,hp,atk,speed,cd
-		super("fast zombie", 100, 10, 2, 2);
+		//name,hp,atk,speed,cd
+		super(ModelType.FAST_ZOMBIE,100,10,2,2);
+
 	}
 
 	public void attack(Model plant) {

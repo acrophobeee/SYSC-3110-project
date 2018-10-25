@@ -8,8 +8,8 @@ public abstract class AbstractPlant extends Model {
 		super();
 	}
 
-	public AbstractPlant(String name, int cost, int hp, int atk, int cd) {
-		super(name, hp, atk, cd);
+	public AbstractPlant(ModelType type, int cost, int hp, int atk, int cd) {
+		super(type,hp,atk,cd);
 		this.cost = cost;
 	}
 
