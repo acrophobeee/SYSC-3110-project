@@ -18,4 +18,14 @@ public class PeaShooter extends AbstractPlant {
 		i++;
 		return bullet;
 	}
+	
+	public void attack(Model zombie) {
+		int i = this.getCd();
+		if (i == 2) {
+			int tempHp = zombie.getHp() - this.getAtk();
+			i = 0;
+			zombie.setHp(tempHp);
+		}
+		i++;
+	} 
 }

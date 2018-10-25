@@ -42,6 +42,7 @@ public class Game {
 						// - Attack
 						// Otherwise, move forward
 						bulletAction((Bullet) model, i, j);
+						System.out.println("bullet["+ i +","+ j+ "]");
 
 					} else if (model instanceof AbstractZombie) {
 						// TODO implement this
@@ -78,9 +79,10 @@ public class Game {
 	private void peaShooterAction(PeaShooter s, int i, int j) {
 		for (int k = j; k < this.board.getLength(); k++) {
 			// Damage the first zombie it finds
-			if (this.board.getModel(i, k) instanceof AbstractZombie) {
-				// TODO
-				s.shoot();
+			if (this.board.getModel(i, k) instanceof AbstractZombie && this.board.getModel(i, j+1)==null) {
+				this.board.addModel(s.shoot(), i, j+1);
+			}if (this.board.getModel(i, j+1) instanceof AbstractZombie) {
+				s.attack((AbstractZombie)this.board.getModel(i, j+1));
 			}
 		}
 	}
@@ -90,8 +92,9 @@ public class Game {
 			b.attack((AbstractZombie) this.board.getModel(i, j + 1));
 			System.out.println("bullet attack zombie with attack");
 			this.board.removeModel(b, i, j);
+		}else if (this.board.getModel(i, j+1)==null) {
+			this.board.shiftModel(b, i, j);
 		}
-		this.board.shiftModel(b, i, j);
 	}
 
 	private void zombieAction(FastZombie z, int i, int j) {
