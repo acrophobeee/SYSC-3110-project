@@ -51,13 +51,13 @@ public class Game {
 						// should move forward
 						// - this.grid.shiftModel(model, i, j)
 						zombieAction((FastZombie) model, i, j);
-						System.out.println("fast zombie is at ["+ i +","+ j+ "]\n");			
+						System.out.println("fast zombie is at ["+ i +","+ j+ "], Hp = "+ model.getHp());			
 					}
 					if (model instanceof SunFlower) {
-					    System.out.println("SunFlower" + "["+i+j+"]  ");
+					    System.out.println("SunFlower" + "["+i+","+j+"], Hp = "+ model.getHp());
 					    }
 					if (model instanceof PeaShooter) {
-					    System.out.println("PeaShooter" + "["+i+j+"]  ");
+					    System.out.println("PeaShooter" + "["+i+","+j+"], Hp = "+ model.getHp());
 					    }
 				}
 			
