@@ -3,8 +3,8 @@ package model;
 public class PeaShooter extends AbstractPlant {
 
 	public PeaShooter() {
-		//name, cost, hp, atk, cd
-		super(ModelType.PEA_SHOOTER,100,100,50,2);
+		// name, cost, hp, atk, cd
+		super(ModelType.PEA_SHOOTER, 100, 100, 50, 2);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -18,7 +18,7 @@ public class PeaShooter extends AbstractPlant {
 		i++;
 		return bullet;
 	}
-	
+
 	public void attack(Model zombie) {
 		int i = this.getCd();
 		if (i == 2) {
@@ -27,5 +27,5 @@ public class PeaShooter extends AbstractPlant {
 			zombie.setHp(tempHp);
 		}
 		i++;
-	} 
+	}
 }

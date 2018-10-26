@@ -9,7 +9,7 @@ public class Bullet extends Model {
 	}
 
 	public Bullet(int atk, int speed) {
-		super(ModelType.BULLET,0,atk,0);
+		super(ModelType.BULLET, 0, atk, 0);
 		this.speed = speed;
 	}
 
