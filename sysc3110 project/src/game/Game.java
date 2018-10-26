@@ -26,14 +26,14 @@ public class Game {
         System.out.println("Game is Over");
 				return;
 			}
-			
+
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 10; j++) {
 					Model model = this.board.getModel(i, j);
 
 					if (model instanceof SunFlower) {
 						sunFlowerAction((SunFlower) model);
-					} 
+					}
 					else if (model instanceof PeaShooter) {
 						peaShooterAction((PeaShooter) model, i, j);
 
@@ -58,8 +58,8 @@ public class Game {
 						}
 						else {
 						zombieAction((FastZombie) model, i, j);
-						System.out.println("fast zombie is at ["+ i +","+ j+ "], Hp = "+ model.getHp());	
-						}		
+						System.out.println("fast zombie is at ["+ i +","+ j+ "], Hp = "+ model.getHp());
+						}
 					}
 					if (model instanceof SunFlower) {
 					    System.out.println("SunFlower" + "["+i+","+j+"], Hp = "+ model.getHp());
@@ -68,12 +68,12 @@ public class Game {
 					    System.out.println("PeaShooter" + "["+i+","+j+"], Hp = "+ model.getHp());
 					    }
 				}
-			
+
 			}
-	      
+
       System.out.println("Current sun points: " + this.sp);
       System.out.println("");
-      
+
       userAction();
 
 		}
@@ -117,7 +117,7 @@ public class Game {
 		else {
 		   if (this.board.getModel(i, j - 1) instanceof AbstractPlant) {
 			  z.attack(this.board.getModel(i, j - 1));
-		   } 
+		   }
 		   else if (this.board.getModel(i, j-1)==null) {
 			  this.board.shiftModel(z, i, j);
 		   }
@@ -146,6 +146,10 @@ public class Game {
     }
 
     AbstractPlant plant = getPlantFromUser();
+    // Skip turn
+    if (plant == null) {
+      return;
+    }
     int row, column;
 
     while (true) {
@@ -165,6 +169,10 @@ public class Game {
   private AbstractPlant getPlantFromUser() {
     while (true) {
       AbstractPlant plant = selectPlant();
+      // Skip turn
+      if (plant == null) {
+        return null;
+      }
       if (plant.getCost() <= this.sp) {
         this.sp -= plant.getCost();
         return plant;
@@ -175,11 +183,14 @@ public class Game {
 
   private AbstractPlant selectPlant() {
     System.out.println("Pick plant to place:");
+    System.out.println("0. Skip turn");
     System.out.println("1. Sun plant    |  50 sp");
     System.out.println("2. Pea shooter  | 100 sp");
     int option = this.consoleInputAsInt();
 
     switch (option) {
+      case 0:
+        return null;
       case 1:
         return new SunFlower();
       case 2:
