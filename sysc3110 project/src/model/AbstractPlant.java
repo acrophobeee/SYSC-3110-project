@@ -9,7 +9,7 @@ public abstract class AbstractPlant extends Model {
 	}
 
 	public AbstractPlant(ModelType type, int cost, int hp, int atk, int cd) {
-		super(type,hp,atk,cd);
+		super(type, hp, atk, cd);
 		this.cost = cost;
 	}
 
