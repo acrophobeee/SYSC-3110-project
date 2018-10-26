@@ -4,7 +4,7 @@ public class FastZombie extends AbstractZombie {
 
 	public FastZombie() {
 		//name,hp,atk,speed,cd
-		super(ModelType.FAST_ZOMBIE,100,10,2,2);
+		super(ModelType.FAST_ZOMBIE,100,10,1,2);
 
 	}
 

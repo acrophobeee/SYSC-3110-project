@@ -51,8 +51,15 @@ public class Game {
 						// Otherwise
 						// should move forward
 						// - this.grid.shiftModel(model, i, j)
+						if(model.getHp()<=0 ) {
+							this.board.removeModel(model, i, j);
+							System.out.println("zombie died, new zombie coming");
+							spawnZombie();
+						}
+						else {
 						zombieAction((FastZombie) model, i, j);
-						System.out.println("fast zombie is at ["+ i +","+ j+ "], Hp = "+ model.getHp());			
+						System.out.println("fast zombie is at ["+ i +","+ j+ "], Hp = "+ model.getHp());	
+						}		
 					}
 					if (model instanceof SunFlower) {
 					    System.out.println("SunFlower" + "["+i+","+j+"], Hp = "+ model.getHp());
@@ -77,6 +84,10 @@ public class Game {
 	}
 
 	private void peaShooterAction(PeaShooter s, int i, int j) {
+		if(s.getHp()<0 ) {
+			this.board.removeModel(s, i, j);
+		}
+		else {
 		for (int k = j; k < this.board.getLength(); k++) {
 			// Damage the first zombie it finds
 			if (this.board.getModel(i, k) instanceof AbstractZombie && this.board.getModel(i, j+1)==null) {
@@ -86,22 +97,30 @@ public class Game {
 			}
 		}
 	}
+ }
 
 	private void bulletAction(Bullet b, int i, int j) {
 		if (this.board.getModel(i, j + 1) instanceof AbstractZombie) {
 			b.attack((AbstractZombie) this.board.getModel(i, j + 1));
 			System.out.println("bullet attack zombie with attack");
 			this.board.removeModel(b, i, j);
-		}else if (this.board.getModel(i, j+1)==null) {
+		}
+		else if (this.board.getModel(i, j+1)==null) {
 			this.board.shiftModel(b, i, j);
 		}
 	}
 
 	private void zombieAction(FastZombie z, int i, int j) {
-		if (this.board.getModel(i, j - 1) instanceof AbstractPlant) {
-			z.attack(this.board.getModel(i, j - 1));
-		}else if (this.board.getModel(i, j-1)==null) {
-			this.board.shiftModel(z, i, j);
+		if(z.getHp()<0 ) {
+			this.board.removeModel(z, i, j);
+		}
+		else {
+		   if (this.board.getModel(i, j - 1) instanceof AbstractPlant) {
+			  z.attack(this.board.getModel(i, j - 1));
+		   } 
+		   else if (this.board.getModel(i, j-1)==null) {
+			  this.board.shiftModel(z, i, j);
+		   }
 		}
 	}
 
@@ -146,7 +165,7 @@ public class Game {
   private AbstractPlant getPlantFromUser() {
     while (true) {
       AbstractPlant plant = selectPlant();
-      if (plant.getCost() < this.sp) {
+      if (plant.getCost() <= this.sp) {
         this.sp -= plant.getCost();
         return plant;
       }
@@ -158,7 +177,6 @@ public class Game {
     System.out.println("Pick plant to place:");
     System.out.println("1. Sun plant    |  50 sp");
     System.out.println("2. Pea shooter  | 100 sp");
-
     int option = this.consoleInputAsInt();
 
     switch (option) {
