@@ -1,6 +1,6 @@
 package game;
 
-// produce by xinyuchen,weihongshen, jacky chiu
+// produce by weihongshen, xinyuchen, jacky chiu, kirin
 import java.lang.Integer;
 import java.util.Random;
 import java.io.BufferedReader;
@@ -57,7 +57,7 @@ public class Game {
 							spawnZombie();
 						} else {
 							zombieAction((FastZombie) model, i, j);
-							System.out.println("fast zombie is at [" + i + "," + j + "], Hp = " + model.getHp());
+							System.out.println("zombie at [" + i + "," + j + "], Hp = " + model.getHp());
 						}
 					}
 					if (model instanceof SunFlower) {
@@ -91,7 +91,7 @@ public class Game {
 					this.board.addModel(s.shoot(), i, j + 1);
 				}
 				if (this.board.getModel(i, j + 1) instanceof AbstractZombie) {
-					s.attack((AbstractZombie) this.board.getModel(i, j + 1));
+					s.attack(this.board.getModel(i, j + 1));
 				}
 			}
 		}
@@ -100,9 +100,9 @@ public class Game {
 	private void bulletAction(Bullet b, int i, int j) {
 		if (this.board.getModel(i, j + 1) instanceof AbstractZombie) {
 			b.attack((AbstractZombie) this.board.getModel(i, j + 1));
-			System.out.println("bullet attack zombie with attack");
+			System.out.println("bullet attack zombie");
 			this.board.removeModel(b, i, j);
-		} else if (this.board.getModel(i, j + 1) == null) {
+		} else {
 			this.board.shiftModel(b, i, j);
 		}
 	}

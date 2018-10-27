@@ -4,7 +4,7 @@ public class PeaShooter extends AbstractPlant {
 
 	public PeaShooter() {
 		// name, cost, hp, atk, cd
-		super(ModelType.PEA_SHOOTER, 100, 100, 50, 2);
+		super(ModelType.PEA_SHOOTER, 100, 100, 25, 2);
 		// TODO Auto-generated constructor stub
 	}
 
