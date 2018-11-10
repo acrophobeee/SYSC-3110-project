@@ -8,6 +8,10 @@ Finally, creates three model: fast zombie, sun flower, peashooter. Fast zombie i
 game and grid in the other package. grid have the tostring() method to print the temporary grid. And game class allow users to run the game 
 and have method to deterine when the game is over.
 
+MileStone 2
+
+
+
 Xinyu Chen 10101031031
 
 Weihong Shen 100980200
