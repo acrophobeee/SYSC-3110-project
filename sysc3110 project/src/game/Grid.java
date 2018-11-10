@@ -7,25 +7,25 @@ import model.*;
 
 public class Grid {
 
-	@Override
-	public String toString() {
-		String grid = "";
-		for (int row = 0; row < getHeight(); row++) {
-			grid += "[";
-			for (int col = 0; col < getLength(); col++) {
-				if (map[row][col] == null) {
-					grid += " ";
-				} else {
-					grid += map[row][col].getType();
-				}
-				if (col < getLength() - 1) {
-					grid += ",";
-				}
-			}
-			grid += "]\n";
-		}
-		return grid;
-	}
+//	@Override
+//	public String toString() {
+//		String grid = "";
+//		for (int row = 0; row < getHeight(); row++) {
+//			grid += "[";
+//			for (int col = 0; col < getLength(); col++) {
+//				if (map[row][col] == null) {
+//					grid += " ";
+//				} else {
+//					grid += map[row][col].getType();
+//				}
+//				if (col < getLength() - 1) {
+//					grid += ",";
+//				}
+//			}
+//			grid += "]\n";
+//		}
+//		return grid;
+//	}
 
 	final private int gridHeight = 5;
 	final private int gridLength = 10;

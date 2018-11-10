@@ -237,6 +237,7 @@ public class Game {
 
 	public static void main(String[] args) {
 		Game g = new Game();
+		View v = new View();
 		g.gameLoop();
 	}
 }
