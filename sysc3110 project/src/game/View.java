@@ -49,6 +49,7 @@ public class View extends JFrame implements ActionListener {
 		point = new JTextField();
 		point.setEditable(false);
 		point.setFont(f);
+		point.setText(String.valueOf(g.getSp()));
 		for (int row=0; row<5; row++) {
 			for(int column=0; column<10; column++) {
 				gg[row][column]= new JTextField("");
