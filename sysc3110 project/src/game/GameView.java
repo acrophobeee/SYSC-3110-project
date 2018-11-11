@@ -4,70 +4,70 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import model.*;
 
 import javax.swing.*;
 
-public class View extends JFrame implements ActionListener {
-
+public class GameView extends JFrame {
 	private JMenu opt;
 	private JMenuItem quit, res;
 	private JPanel pvz,info;
 	private JButton skip, sun, pea;
 	private JTextField point;
 	private JTextField[][] gg;
-	private JLabel sp = new JLabel("Sun points: ");
-	private Game g;
-	
-	public View() {
+	private JLabel sp;
+  private int rows, columns;
+
+	public GameView(ActionListener al, int rows, int columns) {
 		super();
+    this.rows = rows;
+    this.columns = columns;
 		this.setTitle("Plant vs Zombie");
 		this.setLayout(new BorderLayout());
 		Font f = new Font("Trial",Font.BOLD,25);
-		g = new Game();
-		sp.setFont(f);
 		JMenuBar b = new JMenuBar();
 		opt = new JMenu("option");
 		opt.setFont(f);
 		b.add(opt);
 		b.setPreferredSize(new Dimension(100,50));
 		quit = new JMenuItem("quit");
-		quit.addActionListener(this);
+		quit.addActionListener(al);
 		quit.setFont(f);
 		opt.add(quit);
 		res= new JMenuItem("restart");
-		res.addActionListener(this);
+		res.addActionListener(al);
 		res.setFont(f);
 		opt.add(res);
-		pvz = new JPanel(new GridLayout(5,10));
+		pvz = new JPanel(new GridLayout(rows,columns));
 		info = new JPanel(new GridLayout(1,3));
 		info.setPreferredSize(new Dimension(300,100));
-		gg = new JTextField[5][10];
+		gg = new JTextField[rows][columns];
 		point = new JTextField();
 		point.setEditable(false);
 		point.setFont(f);
-		point.setText(String.valueOf(g.getSp()));
-		for (int row=0; row<5; row++) {
-			for(int column=0; column<10; column++) {
-				gg[row][column]= new JTextField("");
-				gg[row][column].setEditable(false);
-				gg[row][column].addActionListener(this);
+		//point.setText(String.valueOf(g.getSp()));
+		for (int row=0; row<rows; row++) {
+			for(int column=0; column<columns; column++) {
+				gg[row][column]= new JTextField();
+        gg[row][column].setEditable(false);
 				gg[row][column].setFont(f);
 				pvz.add(gg[row][column]);
 			}
 		}
 		skip = new JButton("skip");
-		skip.addActionListener(this);
+		skip.addActionListener(al);
 		skip.setFont(f);
 		sun = new JButton("sun");
-		sun.addActionListener(this);
+		sun.addActionListener(al);
 		sun.setFont(f);
 		pea = new JButton("pea");
-		pea.addActionListener(this);
+		pea.addActionListener(al);
 		pea.setFont(f);
+
+	  sp = new JLabel();
+		sp.setFont(f);
 		info.add(sp);
 		info.add(point);
 		info.add(skip);
@@ -79,33 +79,9 @@ public class View extends JFrame implements ActionListener {
 		this.getContentPane().add(b,BorderLayout.NORTH);
 		this.getContentPane().add(pvz,BorderLayout.CENTER);
 		this.getContentPane().add(info,BorderLayout.AFTER_LAST_LINE);
-		
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1000, 1000);
-		this.setVisible(true);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-			if(e.getActionCommand()=="skip") {
-				
-			}
-			if(e.getActionCommand()=="sun") {
-				String rows = JOptionPane.showInputDialog(null, "Input place row", "Input Sun Flower", JOptionPane.QUESTION_MESSAGE);
-				int row =Integer.parseInt(rows);
-				String columns = JOptionPane.showInputDialog(null, "Input place column","Input Sun Flower", JOptionPane.QUESTION_MESSAGE);
-				int col = Integer.parseInt(columns);
-				this.setModel(row,col,ModelType.SUN_FLOWER);
-			}
-			if(e.getSource()==pea) {
-				String rows = JOptionPane.showInputDialog(null, "Input place row","Input Pea Shooter", JOptionPane.QUESTION_MESSAGE);
-				int row =Integer.parseInt(rows);
-				String columns = JOptionPane.showInputDialog(null, "Input place column","Input Pea Shooter", JOptionPane.QUESTION_MESSAGE);
-				int col = Integer.parseInt(columns);
-				this.setModel(row,col,ModelType.PEA_SHOOTER);
-			}
-			
 	}
 
 	public JMenu getOpt() {
@@ -184,10 +160,6 @@ public class View extends JFrame implements ActionListener {
 		return gg;
 	}
 
-	public void setModel(int i, int j, ModelType model) {
-		gg[i][j].setText(model.toString());
-	}
-
 	public JLabel getSp() {
 		return sp;
 	}
@@ -196,13 +168,31 @@ public class View extends JFrame implements ActionListener {
 		this.sp = sp;
 	}
 
-	public Game getG() {
-		return g;
-	}
+  public void renderGrid(Grid grid) {
+    if (grid.getHeight() != this.rows) {
+      throw new IllegalArgumentException("can't render grid due to row length");
+    }
+    if (grid.getLength() != this.columns) {
+      throw new IllegalArgumentException("can't render grid due to columns length");
+    }
 
-	public void setG(Game g) {
-		this.g = g;
-	}
-	
-	}
-		
+		for (int row=0; row<rows; row++) {
+			for(int column=0; column<columns; column++) {
+        Model m = grid.getModel(row, column);
+        if (m == null) {
+          this.gg[row][column].setText("");
+        } else {
+          this.gg[row][column].setText(m.getType().toString());
+        }
+      }
+    }
+  }
+
+  public void renderSunPoints(int sp) {
+    this.sp.setText("Sun points: " + sp);
+  }
+
+  public void display() {
+    this.setVisible(true);
+  }
+}
