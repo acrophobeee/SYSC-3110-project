@@ -9,7 +9,6 @@ public abstract class Model {
 
 	public Model() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Model(ModelType type, int hp, int atk, int cd) {

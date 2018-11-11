@@ -8,7 +8,6 @@ public class SunFlower extends AbstractPlant {
 		// name,cost,hp,damage,cd
 		super(ModelType.SUN_FLOWER, 50, 50, 0, 3);
 		this.sp = sp;
-		// TODO Auto-generated constructor stub
 	}
 
 	public boolean generate() {
