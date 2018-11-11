@@ -2,7 +2,7 @@ build:
 	javac */**.java
 
 run: build
-	java game.Game
+	java game.GameViewController
 
 clean:
 	rm */**.class
