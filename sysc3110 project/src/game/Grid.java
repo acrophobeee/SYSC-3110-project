@@ -60,4 +60,24 @@ public class Grid {
 			addModel(model, i, j);
 		}
 	}
+
+	@Override
+	public String toString() {
+		String grid = "";
+		for (int row = 0; row < getHeight(); row++) {
+			grid += "[";
+			for (int col = 0; col < getLength(); col++) {
+				if (map[row][col] == null) {
+					grid += " ";
+				} else {
+					grid += map[row][col].getType();
+				}
+				if (col < getLength() - 1) {
+					grid += ",";
+				}
+			}
+			grid += "]\n";
+		}
+		return grid;
+	}
 }
