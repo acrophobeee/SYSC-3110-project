@@ -55,80 +55,80 @@ public class GameViewController implements ActionListener {
     }
   }
 
-	private void userAction(String plantOption) {
-		if (this.game.getSp() < 50) {
-			System.out.println("Not enough sun points, skipping turn");
-			return;
-		}
+  private void userAction(String plantOption) {
+    if (this.game.getSp() < 50) {
+      System.out.println("Not enough sun points, skipping turn");
+      return;
+    }
 
-		AbstractPlant plant = getPlant(plantOption);
-		int row, column;
+    AbstractPlant plant = getPlant(plantOption);
+    int row, column;
 
-		while (true) {
-			row = getRowFromUser();
-			column = getColumnFromUser();
+    while (true) {
+      row = getRowFromUser();
+      column = getColumnFromUser();
 
-			Model m = this.game.getGrid().getModel(row, column);
-			if (m == null) {
-				break;
-			}
-			System.out.println("Location isn't available, try a different one");
-		}
+      Model m = this.game.getGrid().getModel(row, column);
+      if (m == null) {
+        break;
+      }
+      System.out.println("Location isn't available, try a different one");
+    }
 
-		this.game.getGrid().addModel(plant, row, column);
-	}
+    this.game.getGrid().addModel(plant, row, column);
+  }
 
-	private AbstractPlant getPlant(String plantOption) {
-		while (true) {
-			AbstractPlant plant = selectPlant(plantOption);
-			if (plant.getCost() <= this.game.getSp()) {
-				this.game.setSp(this.game.getSp() - plant.getCost());
-				return plant;
-			}
-			System.out.println("Not enough sun points for selected plant, try again");
-		}
-	}
+  private AbstractPlant getPlant(String plantOption) {
+    while (true) {
+      AbstractPlant plant = selectPlant(plantOption);
+      if (plant.getCost() <= this.game.getSp()) {
+        this.game.setSp(this.game.getSp() - plant.getCost());
+        return plant;
+      }
+      System.out.println("Not enough sun points for selected plant, try again");
+    }
+  }
 
-	private AbstractPlant selectPlant(String plantOption) {
-		switch (plantOption) {
-		case "sun":
-			return new SunFlower();
-		case "pea":
-			return new PeaShooter();
-		default:
-			System.out.println(plantOption + " isn't a valid option");
-      throw new IllegalArgumentException("bad plant option");
-		}
-	}
+  private AbstractPlant selectPlant(String plantOption) {
+    switch (plantOption) {
+      case "sun":
+        return new SunFlower();
+      case "pea":
+        return new PeaShooter();
+      default:
+        System.out.println(plantOption + " isn't a valid option");
+        throw new IllegalArgumentException("bad plant option");
+    }
+  }
 
-	private int getRowFromUser() {
-		System.out.println("Select row to place plant on grid (indexed from 0)");
+  private int getRowFromUser() {
+    System.out.println("Select row to place plant on grid (indexed from 0)");
 
-		while (true) {
+    while (true) {
       String rows = JOptionPane.showInputDialog(null, "Input place row", JOptionPane.QUESTION_MESSAGE);
       int row =Integer.parseInt(rows);
-			if (row >= 0 && row < this.game.getGrid().getHeight()) {
-				return row;
-			}
-			System.out.println("Invalid row, try again");
-		}
-	}
+      if (row >= 0 && row < this.game.getGrid().getHeight()) {
+        return row;
+      }
+      System.out.println("Invalid row, try again");
+    }
+  }
 
-	private int getColumnFromUser() {
-		System.out.println("Select column to place plant on grid (indexed from 0)");
+  private int getColumnFromUser() {
+    System.out.println("Select column to place plant on grid (indexed from 0)");
 
-		while (true) {
+    while (true) {
       String columns = JOptionPane.showInputDialog(null, "Input place column", JOptionPane.QUESTION_MESSAGE);
       int column = Integer.parseInt(columns);
-			if (column >= 0 && column < this.game.getGrid().getLength()) {
-				return column;
-			}
-			System.out.println("Invalid column, try again");
-		}
-	}
+      if (column >= 0 && column < this.game.getGrid().getLength()) {
+        return column;
+      }
+      System.out.println("Invalid column, try again");
+    }
+  }
 
-	public static void main(String[] args) {
-		GameViewController g = new GameViewController();
+  public static void main(String[] args) {
+    GameViewController g = new GameViewController();
     g.run();
-	}
+  }
 }

@@ -11,15 +11,15 @@ import model.*;
 
 public class Game {
 
-	private Grid board;
-	private int sp; // sun points.
+  private Grid board;
+  private int sp; // sun points.
 
-	public Game() {
-		this.board = new Grid();
-		this.sp = 200;
+  public Game() {
+    this.board = new Grid();
+    this.sp = 200;
 
     this.spawnZombie();
-	}
+  }
 
   // runTurn runs one turns worth of actions per entity on the board.
   // Returns if the game is over or not.
