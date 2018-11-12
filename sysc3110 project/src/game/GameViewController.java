@@ -106,12 +106,18 @@ public class GameViewController implements ActionListener {
 
     while (true) {
       String rows = JOptionPane.showInputDialog(null, "Input place row", JOptionPane.QUESTION_MESSAGE);
+      if(rows == null)
+      {
+    	System.exit(0);
+      }
       int row =Integer.parseInt(rows);
       if (row >= 0 && row < this.game.getGrid().getHeight()) {
         return row;
       }
+      else {
       JOptionPane.showMessageDialog(null, "Invalid row, try again");
     }
+   }
   }
 
   private int getColumnFromUser() {
@@ -119,11 +125,17 @@ public class GameViewController implements ActionListener {
 
     while (true) {
       String columns = JOptionPane.showInputDialog(null, "Input place column", JOptionPane.QUESTION_MESSAGE);
+      if(columns == null)
+      {
+    	System.exit(0);
+      }
       int column = Integer.parseInt(columns);
+      
       if (column >= 0 && column < this.game.getGrid().getLength()) {
         return column;
       }
-      JOptionPane.showMessageDialog(null,"Invalid column, try again");
+      else{JOptionPane.showMessageDialog(null,"Invalid column, try again");
+    }
     }
   }
 
