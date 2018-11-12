@@ -32,14 +32,14 @@ public class GameView extends JFrame {
     opt.setFont(f);
     b.add(opt);
     b.setPreferredSize(new Dimension(100,50));
-    quit = new JMenuItem("quit");
-    quit.addActionListener(al);
-    quit.setFont(f);
-    opt.add(quit);
     res= new JMenuItem("restart");
     res.addActionListener(al);
     res.setFont(f);
     opt.add(res);
+    quit = new JMenuItem("quit");
+    quit.addActionListener(al);
+    quit.setFont(f);
+    opt.add(quit);
     pvz = new JPanel(new GridLayout(rows,columns));
     info = new JPanel(new GridLayout(1,3));
     info.setPreferredSize(new Dimension(300,100));
@@ -65,8 +65,8 @@ public class GameView extends JFrame {
     pea = new JButton("pea");
     pea.addActionListener(al);
     pea.setFont(f);
-
     sp = new JLabel();
+    sp.setText("Sun points: ");
     sp.setFont(f);
     info.add(sp);
     info.add(point);
@@ -189,7 +189,7 @@ public class GameView extends JFrame {
   }
 
   public void renderSunPoints(int sp) {
-    this.sp.setText("Sun points: " + sp);
+    this.point.setText(""+sp);
   }
 
   public void display() {

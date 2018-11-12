@@ -30,14 +30,9 @@ public class Game {
         Model model = this.board.getModel(i, j);
 
         if (model instanceof SunFlower) {
-          sunFlowerAction((SunFlower) model);
+          sunFlowerAction((SunFlower) model, i, j);
         } else if (model instanceof PeaShooter) {
           peaShooterAction((PeaShooter) model, i, j);
-
-        } else if (model instanceof Bullet) {
-          bulletAction((Bullet) model, i, j);
-          System.out.println("bullet[" + i + "," + j + "]");
-
         } else if (model instanceof AbstractZombie) {
           if (model.getHp() <= 0) {
             this.board.removeModel(model, i, j);
@@ -63,39 +58,32 @@ public class Game {
 
     return this.isGameOver();
   }
+  
+  void reStart() {
+	  this.board.clearMap();
+  }
 
-  private void sunFlowerAction(SunFlower s) {
+  private void sunFlowerAction(SunFlower s, int i, int j) {
     this.sp += s.generateSun();
+    if (s.getHp()<=0) {
+    	this.board.removeModel(s, i, j);
+    }
   }
 
   private void peaShooterAction(PeaShooter s, int i, int j) {
-    if (s.getHp() < 0) {
+    if (s.getHp() <= 0) {
       this.board.removeModel(s, i, j);
     } else {
       for (int k = j; k < this.board.getLength(); k++) {
-        // Damage the first zombie it finds
-        if (this.board.getModel(i, k) instanceof AbstractZombie && this.board.getModel(i, j + 1) == null) {
-          this.board.addModel(s.shoot(), i, j + 1);
-        }
-        if (this.board.getModel(i, j + 1) instanceof AbstractZombie) {
-          s.attack(this.board.getModel(i, j + 1));
+        if (this.board.getModel(i, k) instanceof AbstractZombie) {
+          s.attack(this.board.getModel(i, k));
         }
       }
     }
   }
 
-  private void bulletAction(Bullet b, int i, int j) {
-    if (this.board.getModel(i, j + 1) instanceof AbstractZombie) {
-      b.attack((AbstractZombie) this.board.getModel(i, j + 1));
-      System.out.println("bullet attack zombie");
-      this.board.removeModel(b, i, j);
-    } else {
-      this.board.shiftModel(b, i, j);
-    }
-  }
-
   private void zombieAction(FastZombie z, int i, int j) {
-    if (z.getHp() < 0) {
+    if (z.getHp() <= 0) {
       this.board.removeModel(z, i, j);
     } else {
       if (this.board.getModel(i, j - 1) instanceof AbstractPlant) {
@@ -119,9 +107,9 @@ public class Game {
   }
 
   private void spawnZombie() {
-    int r = (new Random()).nextInt(4) + 1;
+    int r = (new Random()).nextInt(5);
     FastZombie fz = new FastZombie();
-    this.board.addModel(fz, r, 9);
+    this.board.addModel(fz, r, this.board.getLength()-1);
   }
 
   private boolean isGameOver() {

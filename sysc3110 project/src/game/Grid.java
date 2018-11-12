@@ -53,12 +53,6 @@ public class Grid {
 				addModel(model, i, 0);
 			}
 		}
-		if (model instanceof Bullet) {
-			removeModel(model, i, j);
-			if (j + ((Bullet) model).getSpeed() < 10)
-				j = j + ((Bullet) model).getSpeed();
-			addModel(model, i, j);
-		}
 	}
 
 	@Override

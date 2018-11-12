@@ -9,12 +9,7 @@ public class FastZombie extends AbstractZombie {
 	}
 
 	public void attack(Model plant) {
-		int i = this.getCd();
-		if (i == 2) {
-			int tempHp = plant.getHp() - this.getAtk();
-			i = 0;
-			plant.setHp(tempHp);
-		}
-		i++;
+		int tempHp = plant.getHp() - this.getAtk();
+		plant.setHp(tempHp);
 	}
 }

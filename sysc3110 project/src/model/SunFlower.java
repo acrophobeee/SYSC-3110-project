@@ -10,21 +10,8 @@ public class SunFlower extends AbstractPlant {
 		this.sp = sp;
 	}
 
-	public boolean generate() {
-		int i = this.getCd();
-		if (i == 3) {
-			i = 0;
-			return true;
-		}
-		i++;
-		return false;
-	}
-
 	public int generateSun() {
-		if (generate()) {
-			sp += 25;
-		}
-		return sp;
+		return sp = 25;
 	}
 
 	public int getSp() {

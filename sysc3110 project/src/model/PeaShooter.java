@@ -7,17 +7,6 @@ public class PeaShooter extends AbstractPlant {
 		super(ModelType.PEA_SHOOTER, 100, 100, 25, 2);
 	}
 
-	public Bullet shoot() {
-		Bullet bullet = null;
-		int i = this.getCd();
-		if (i == 2) {
-			i = 0;
-			bullet = new Bullet(this.getAtk(), 1);
-		}
-		i++;
-		return bullet;
-	}
-
 	public void attack(Model zombie) {
 		int i = this.getCd();
 		if (i == 2) {

@@ -40,9 +40,9 @@ public class GameViewController implements ActionListener {
       case "skip":
         break;
       case "quit":
-        // TODO
+        System.exit(0);
       case "restart":
-        // TODO
+        this.game = new Game();
         break;
     }
 
@@ -57,7 +57,7 @@ public class GameViewController implements ActionListener {
 
   private void userAction(String plantOption) {
     if (this.game.getSp() < 50) {
-      System.out.println("Not enough sun points, skipping turn");
+      JOptionPane.showMessageDialog(null, "You don't have enough Sun point, skip round");;
       return;
     }
 
@@ -72,7 +72,7 @@ public class GameViewController implements ActionListener {
       if (m == null) {
         break;
       }
-      System.out.println("Location isn't available, try a different one");
+      JOptionPane.showMessageDialog(null, "Location unavailable, please select another location");
     }
 
     this.game.getGrid().addModel(plant, row, column);
@@ -110,7 +110,7 @@ public class GameViewController implements ActionListener {
       if (row >= 0 && row < this.game.getGrid().getHeight()) {
         return row;
       }
-      System.out.println("Invalid row, try again");
+      JOptionPane.showMessageDialog(null, "Invalid row, try again");
     }
   }
 
@@ -123,7 +123,7 @@ public class GameViewController implements ActionListener {
       if (column >= 0 && column < this.game.getGrid().getLength()) {
         return column;
       }
-      System.out.println("Invalid column, try again");
+      JOptionPane.showMessageDialog(null,"Invalid column, try again");
     }
   }
 
