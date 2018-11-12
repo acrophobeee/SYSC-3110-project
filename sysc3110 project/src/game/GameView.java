@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -19,7 +20,7 @@ public class GameView extends JFrame {
   private JTextField[][] gg;
   private JLabel sp;
   private int rows, columns;
-
+  
   public GameView(ActionListener al, int rows, int columns) {
     super();
     this.rows = rows;
@@ -42,7 +43,7 @@ public class GameView extends JFrame {
     opt.add(quit);
     pvz = new JPanel(new GridLayout(rows,columns));
     info = new JPanel(new GridLayout(1,3));
-    info.setPreferredSize(new Dimension(300,100));
+    info.setPreferredSize(new Dimension(300,175));
     gg = new JTextField[rows][columns];
     point = new JTextField();
     point.setEditable(false);
@@ -53,18 +54,20 @@ public class GameView extends JFrame {
         gg[row][column]= new JTextField();
         gg[row][column].setEditable(false);
         gg[row][column].setFont(f);
+        gg[row][column].setBackground(new Color(124,252,0));
         pvz.add(gg[row][column]);
       }
     }
+    ImageIcon peacho = new ImageIcon("pea.jpg");
+    ImageIcon sunn = new ImageIcon("images.jpg");
     skip = new JButton("skip");
     skip.addActionListener(al);
     skip.setFont(f);
-    sun = new JButton("sun");
+    sun = new JButton("sun", sunn );
     sun.addActionListener(al);
     sun.setFont(f);
-    pea = new JButton("pea");
+    pea = new JButton("pea", peacho);
     pea.addActionListener(al);
-    pea.setFont(f);
     sp = new JLabel();
     sp.setText("Sun points: ");
     sp.setFont(f);

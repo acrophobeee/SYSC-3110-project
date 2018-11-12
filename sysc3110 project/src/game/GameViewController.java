@@ -45,7 +45,7 @@ public class GameViewController implements ActionListener {
         this.game = new Game();
         break;
     }
-
+  
     Boolean over = this.game.runTurn();
     this.gameView.renderGrid(this.game.getGrid());
     this.gameView.renderSunPoints(this.game.getSp());
