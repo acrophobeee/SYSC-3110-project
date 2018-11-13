@@ -22,6 +22,7 @@ public class GameView extends JFrame {
   private int rows, columns;
   private ImageIcon peacho = new ImageIcon("pea.jpg");
   private ImageIcon sunn = new ImageIcon("images.jpg");
+  private ImageIcon zome = new ImageIcon("zom.jpg");
   
   public GameView(ActionListener al, int rows, int columns) {
     super();
@@ -54,7 +55,7 @@ public class GameView extends JFrame {
     for (int row=0; row<rows; row++) {
       for(int column=0; column<columns; column++) {
         gg[row][column]= new JButton();
-        gg[row][column].setEnabled(false);
+        gg[row][column].setEnabled(true);
         gg[row][column].setBackground(new Color(124,252,0));
         pvz.add(gg[row][column]);
       }
@@ -175,7 +176,7 @@ public class GameView extends JFrame {
       for(int column=0; column<columns; column++) {
         Model m = grid.getModel(row, column);
         if (m == null) {
-          this.gg[row][column].setText("");
+          this.gg[row][column].setIcon(null);
         } 
         else if (m instanceof PeaShooter){
           this.gg[row][column].setIcon(peacho);
@@ -183,6 +184,10 @@ public class GameView extends JFrame {
         else if (m instanceof SunFlower){
             this.gg[row][column].setIcon(sunn);
           }
+        else if(m instanceof FastZombie){
+            this.gg[row][column].setIcon(zome);
+          }
+        
       }
     }
   }
