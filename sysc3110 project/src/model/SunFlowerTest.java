@@ -18,11 +18,13 @@ public class SunFlowerTest {
 	public void tearDown() throws Exception {
 	}
 
+	// test constructor and ModelType
 	@Test
 	public void testSunFlower() {
 		assert (s.getType() == ModelType.SUN_FLOWER);
 	}
 
+	// test that a sunflower can generate sun properly
 	@Test
 	public void testGenerateSun() {
 		assert (s.getSp() == 0);

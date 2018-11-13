@@ -18,11 +18,13 @@ public class PeaShooterTest {
 	public void tearDown() throws Exception {
 	}
 
+	// Test constructor and ModelType
 	@Test
 	public void testPeaShooter() {
 		assert (p.getType() == ModelType.PEA_SHOOTER);
 	}
 
+	// test that a pea shooter can attack a zombie, and change its health
 	@Test
 	public void testAttack() {
 		FastZombie z = new FastZombie();

@@ -18,14 +18,16 @@ public class FastZombieTest {
 	public void tearDown() throws Exception {
 	}
 
+	// test constructor and ModelType
 	@Test
 	public void testFastZombie() {
 		assert (z.getType() == ModelType.FAST_ZOMBIE);
 	}
 
+	// test that it can attack a plant
 	@Test
 	public void testAttack() {
-		SunFlower s = new SunFlower();
+		AbstractPlant s = new SunFlower();
 		z.attack(s);
 		assert (s.getHp() == 40);
 	}
