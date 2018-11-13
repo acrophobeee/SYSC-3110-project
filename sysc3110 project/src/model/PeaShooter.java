@@ -14,6 +14,6 @@ public class PeaShooter extends AbstractPlant {
 			i = 0;
 			zombie.setHp(tempHp);
 		}
-		i++;
+		this.setCd(i + 1);
 	}
 }
