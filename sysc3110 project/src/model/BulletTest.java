@@ -18,11 +18,13 @@ public class BulletTest {
 	public void tearDown() throws Exception {
 	}
 
+	// Test constructor and ModelType
 	@Test
 	public void testBullet() {
 		assert (b.getType() == ModelType.BULLET);
 	}
 
+	// Test other constructor
 	@Test
 	public void testBulletIntInt() {
 		b = new Bullet(1, 2);
@@ -30,6 +32,7 @@ public class BulletTest {
 		assert (b.getSpeed() == 2);
 	}
 
+	// Test that it can damage a zombie
 	@Test
 	public void testAttack() {
 		FastZombie z = new FastZombie();
@@ -37,6 +40,7 @@ public class BulletTest {
 		assert (z.getHp() == 90);
 	}
 
+	// test getters and setters
 	@Test
 	public void testGetSpeed() {
 		assert (b.getSpeed() == 10);

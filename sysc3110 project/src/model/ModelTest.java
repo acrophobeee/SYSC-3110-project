@@ -29,6 +29,7 @@ public class ModelTest {
 		assert (m.getType() == ModelType.BULLET);
 	}
 
+	// Test all getters and setters
 	@Test
 	public void testGetHp() {
 		assert (m.getHp() == 50);
