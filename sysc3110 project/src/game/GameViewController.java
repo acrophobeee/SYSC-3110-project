@@ -13,7 +13,9 @@ public class GameViewController implements ActionListener {
 
   // Views
   private GameView gameView;
-
+  
+  private ImageIcon image;
+  
   GameViewController() {
     this.game = new Game();
 
