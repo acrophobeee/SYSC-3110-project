@@ -13,9 +13,9 @@ public class GameViewController implements ActionListener {
 
   // Views
   private GameView gameView;
-  
+
   private ImageIcon image;
-  
+
   GameViewController() {
     this.game = new Game();
 
@@ -33,13 +33,17 @@ public class GameViewController implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
+    Boolean gameOver = false;
+
     String action = e.getActionCommand();
     switch (action) {
       case "pea":
       case "sun":
         userAction(action);
+        gameOver = this.game.runTurn();
         break;
       case "skip":
+        gameOver = this.game.runTurn();
         break;
       case "quit":
         System.exit(0);
@@ -47,12 +51,11 @@ public class GameViewController implements ActionListener {
         this.game = new Game();
         break;
     }
-  
-    Boolean over = this.game.runTurn();
+
     this.gameView.renderGrid(this.game.getGrid());
     this.gameView.renderSunPoints(this.game.getSp());
 
-    if (over) {
+    if (gameOver) {
       JOptionPane.showMessageDialog(null, "GAME OVER");
     }
   }
@@ -105,7 +108,7 @@ public class GameViewController implements ActionListener {
 
   private int getRowFromUser() {
 	    System.out.println("Select row to place plant on grid (indexed from 0)");
-	
+
 	    while (true) {
 	      String rows = JOptionPane.showInputDialog(null, "Input place row", JOptionPane.QUESTION_MESSAGE);
 	      if(rows == null)
@@ -121,10 +124,10 @@ public class GameViewController implements ActionListener {
 	    }
 	   }
 	  }
-	
+
 	  private int getColumnFromUser() {
 	    System.out.println("Select column to place plant on grid (indexed from 0)");
-	
+
 	    while (true) {
 	      String columns = JOptionPane.showInputDialog(null, "Input place column", JOptionPane.QUESTION_MESSAGE);
 	      if(columns == null)
@@ -132,7 +135,7 @@ public class GameViewController implements ActionListener {
 	    	System.exit(0);
 	      }
 	      int column = Integer.parseInt(columns);
-	      
+
 	      if (column >= 0 && column < this.game.getGrid().getLength()) {
 	        return column;
 	      }
