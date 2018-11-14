@@ -25,8 +25,8 @@ public class ModelTest {
 
 	@Test
 	public void testSetType() {
-		m.setType(ModelType.BULLET);
-		assert (m.getType() == ModelType.BULLET);
+		m.setType(ModelType.FAST_ZOMBIE);
+		assert (m.getType() == ModelType.FAST_ZOMBIE);
 	}
 
 	// Test all getters and setters
