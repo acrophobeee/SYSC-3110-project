@@ -9,7 +9,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
   SunFlowerTest.class,
   ModelTest.class,
-  BulletTest.class,
   PeaShooterTest.class,
   FastZombieTest.class,
   ModelTypeTest.class,
