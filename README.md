@@ -1,5 +1,10 @@
 # SYSC-3110-project-Group-1
 
+MileStone 2
+
+Add JUnit test for all the model, at this version pvz game will be in the gui instead of text based. Therefore, we add the gameview class 
+and game controller class and we modfify the game class. For the gameview class, we add three images to represent peashooter, sunflower and zombies and create a 5*10[] button to model the backyard, another three buttons at bottom is for sunflower, peashooter, and skip turn. When user press the sunflower or peashooter, diaglgue will sow to user input rows and columns. After they input, the backyard will add a image of plants at user's input loation. At top there is a JMenu called option, use can restart or directly exit the game. 
+
 MileStone 1
 
 There are two packages in the project, one package for all the model(later will be more kinds of plants and zombies). The model pakcage first create a abstract class called model to connects different kinds of model and other model can inherit from the model. Then creates two class abstractplant and abstractzombie inherited from model each class has its speical parameter for zombie is speed and plant is cost.
@@ -8,7 +13,7 @@ Finally, creates three model: fast zombie, sun flower, peashooter. Fast zombie i
 game and grid in the other package. grid have the tostring() method to print the temporary grid. And game class allow users to run the game 
 and have method to deterine when the game is over.
 
-MileStone 2
+
 
 
 
