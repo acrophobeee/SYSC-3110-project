@@ -1,3 +1,10 @@
+/*
+ * This class is the build of gui. It has a 5*10 button to represent backyard and and three 
+ * buttons skip, sunflower and peashooter for user to place or direct skip the turn.
+ * The design is based on milestone 1. In milstone 1, we make a grid class to show the what is
+ * the game going on. In the class, method rendergrid is make connection with gui and grid.
+ * So that gui and show what is grid going on. 
+ */
 package game;
 
 import java.awt.BorderLayout;
@@ -20,7 +27,7 @@ public class GameView extends JFrame {
 	private JButton[][] gg;
 	private JLabel sp;
 	private int rows, columns;
-	private ImageIcon peacho = new ImageIcon("pea.jpg");
+	private ImageIcon peacho = new ImageIcon("pea.jpg"); // three images for zombie and plants
 	private ImageIcon sunn = new ImageIcon("images.jpg");
 	private ImageIcon zome = new ImageIcon("zom.jpg");
 
@@ -54,7 +61,7 @@ public class GameView extends JFrame {
 		point = new JTextField();
 		point.setEditable(false);
 		point.setFont(f);
-		//Create a text field with size row*column.
+		//Create JButton with size row*column.
 		for (int row = 0; row < rows; row++) {
 			for (int column = 0; column < columns; column++) {
 				gg[row][column] = new JButton();
@@ -91,7 +98,10 @@ public class GameView extends JFrame {
 		this.setSize(1100, 800);
 	}
 
-	//Show the model type in Text field.
+	/*
+	 * if the grid has the model at a specific location render it to the gui with the model 
+	 * image
+	 */
 	public void renderGrid(Grid grid) {
 		if (grid.getHeight() != this.rows) {
 			throw new IllegalArgumentException("can't render grid due to row length");
@@ -117,7 +127,7 @@ public class GameView extends JFrame {
 		}
 	}
 
-	//Change the sun point while use or generate
+	//Set the sun point textfield while use or generate
 	public void renderSunPoints(int sp) {
 		this.point.setText("" + sp);
 	}

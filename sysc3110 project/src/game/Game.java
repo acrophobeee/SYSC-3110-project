@@ -1,11 +1,11 @@
 package game;
+/*
+produce by weihongshen, xinyuchen, jacky chiu, kirin
+*/
 
-// produce by weihongshen, xinyuchen, jacky chiu, kirin
 import java.lang.Integer;
 import java.util.Random;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 
 import model.*;
 

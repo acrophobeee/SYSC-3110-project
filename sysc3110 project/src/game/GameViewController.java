@@ -52,15 +52,17 @@ public class GameViewController implements ActionListener {
 			this.game = new Game();
 			break;
 		}
-
+		
+       // everytime the actionPerformed render it to the gui
 		this.gameView.renderGrid(this.game.getGrid());
 		this.gameView.renderSunPoints(this.game.getSp());
 
-		if (gameOver) {
+		if (gameOver) { // show when the game is over 
 			JOptionPane.showMessageDialog(null, "GAME OVER");
 		}
 	}
-
+	
+   // add the model to the grid first
 	private void userAction(String plantOption) {
 		if (this.game.getSp() < 50) {
 			JOptionPane.showMessageDialog(null, "You don't have enough Sun point, skip round");
@@ -84,7 +86,7 @@ public class GameViewController implements ActionListener {
 
 		this.game.getGrid().addModel(plant, row, column);
 	}
-
+    
 	private AbstractPlant getPlant(String plantOption) {
 		while (true) {
 			AbstractPlant plant = selectPlant(plantOption);
@@ -95,7 +97,7 @@ public class GameViewController implements ActionListener {
 			System.out.println("Not enough sun points for selected plant, try again");
 		}
 	}
-
+	
 	private AbstractPlant selectPlant(String plantOption) {
 		switch (plantOption) {
 		case "sun":
@@ -144,7 +146,8 @@ public class GameViewController implements ActionListener {
 			}
 		}
 	}
-
+	
+	//main function will display the gui
 	public static void main(String[] args) {
 		GameViewController g = new GameViewController();
 		g.run();
