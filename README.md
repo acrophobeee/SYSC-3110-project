@@ -3,7 +3,10 @@
 MileStone 2
 
 Add JUnit test for all the model, at this version pvz game will be in the gui instead of text based. Therefore, need to add the gameview and game controller and we modfify the game class. For the gameview class, we add three images to represent peashooter, sunflower and zombies and create a 5*10[] button to model the backyard, another three buttons at bottom are for placing sunflower, peashooter, and skip turn. When user press the sunflower or peashooter, diaglogue will show to user to input rows and columns. After they input, the backyard will add a image of plants at user's input location. At top of window there is a JMenu called option, users can restart or directly exit the game. (further will be able to choose diffculty and save)
+Issues ：temporary our plants is placed by user inputing rows and columns but we want to change to user could place the plants through click the plants button and then click the one button in the backyard so that plants can directly place to the location which users clicked. 
 All the logic is inherited from milestone1, just render the milestoen1 console text output into the gui.
+Roadmap: next milestone, we will add more models for the plants and zombies. Also we will add different difficulty for the users. And fix the issue mentioned before.
+
 
 MileStone 1
 
@@ -12,8 +15,6 @@ Finally, creates three model: fast zombie, sun flower, peashooter. Fast zombie i
 
 game and grid in the other package. grid have the tostring() method to print the temporary grid. And game class allow users to run the game 
 and have method to deterine when the game is over.
-
-
 
 
 
