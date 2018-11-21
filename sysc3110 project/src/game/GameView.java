@@ -22,7 +22,7 @@ public class GameView extends JFrame {
 	private JMenu opt;
 	private JMenuItem quit, res;
 	private JPanel pvz, info;
-	private JButton undo, redo, skip, sun, pea;
+	private JButton undo, redo, skip, sun, pea, nut;
 	private JTextField point;
 	private JButton[][] gg;
 	private JLabel sp;
@@ -30,6 +30,8 @@ public class GameView extends JFrame {
 	private ImageIcon peacho = new ImageIcon("pea.jpg"); // three images for zombie and plants
 	private ImageIcon sunn = new ImageIcon("images.jpg");
 	private ImageIcon zome = new ImageIcon("zom.jpg");
+	private ImageIcon nutp = new ImageIcon("nut.png");
+	private ImageIcon chz = new ImageIcon("chz.jpg");
 
 	public GameView(ActionListener al, int rows, int columns) {
 		super();
@@ -85,6 +87,9 @@ public class GameView extends JFrame {
 		pea = new JButton("pea", peacho);
 		pea.setFont(f);
 		pea.addActionListener(al);
+		nut = new JButton("nut", nutp);
+		nut.setFont(f);
+		nut.addActionListener(al);
 		sp = new JLabel();
 		sp.setText("Sun points: ");
 		sp.setFont(f);
@@ -95,6 +100,7 @@ public class GameView extends JFrame {
 		info.add(skip);
 		info.add(sun);
 		info.add(pea);
+		info.add(nut);
 		this.add(b);
 		this.add(pvz);
 		this.add(info);
@@ -129,6 +135,10 @@ public class GameView extends JFrame {
 					this.gg[row][column].setIcon(sunn);
 				} else if (m instanceof FastZombie) {
 					this.gg[row][column].setIcon(zome);
+				} else if (m instanceof Nut) {
+					this.gg[row][column].setIcon(nutp);
+				} else if (m instanceof ConeHeadZombie) {
+					this.gg[row][column].setIcon(chz);
 				}
 
 			}

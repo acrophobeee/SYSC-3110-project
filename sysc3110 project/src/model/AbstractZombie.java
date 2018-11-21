@@ -21,4 +21,8 @@ public abstract class AbstractZombie extends Model {
 		this.speed = speed;
 	}
 
+	public void attack(Model plant) {
+		int tempHp = plant.getHp() - this.getAtk();
+		plant.setHp(tempHp);
+	}
 }

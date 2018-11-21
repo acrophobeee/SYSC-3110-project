@@ -8,8 +8,4 @@ public class FastZombie extends AbstractZombie {
 
 	}
 
-	public void attack(Model plant) {
-		int tempHp = plant.getHp() - this.getAtk();
-		plant.setHp(tempHp);
-	}
 }

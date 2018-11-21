@@ -4,6 +4,7 @@ produce by weihongshen, xinyuchen, jacky chiu, kirin
 */
 
 import java.lang.Integer;
+import java.util.ArrayList;
 import java.util.Random;
 import java.io.IOException;
 import java.io.ByteArrayInputStream;
@@ -46,9 +47,12 @@ public class Game implements Serializable {
 						System.out.println("zombie died, new zombie coming");
 						spawnZombie();
 					} else {
-						zombieAction((FastZombie) model, i, j);
+						zombieAction((AbstractZombie) model, i, j);
 						System.out.println("zombie at [" + i + "," + j + "], Hp = " + model.getHp());
 					}
+				} else if (model instanceof Nut) {
+					nutAction((Nut)model,i,j);
+					System.out.println("Nut" + "[" + i + "," + j + "], Hp = " + model.getHp());
 				}
 				if (model instanceof SunFlower) {
 					System.out.println("SunFlower" + "[" + i + "," + j + "], Hp = " + model.getHp());
@@ -90,11 +94,20 @@ public class Game implements Serializable {
 			}
 		}
 	}
+	
+	/*
+	 * action for nut to remove while killed.
+	 */
+	private void nutAction(Nut n, int i, int j) {
+		if (n.getHp()<=0) {
+			this.board.removeModel(n, i, j);
+		}
+	}
 
 	/*
 	 * action for zombie to attck plants and remove while killed.
 	 */
-	private void zombieAction(FastZombie z, int i, int j) {
+	private void zombieAction(AbstractZombie z, int i, int j) {
 		if (z.getHp() <= 0) {
 			this.board.removeModel(z, i, j);
 		} else {
@@ -122,9 +135,31 @@ public class Game implements Serializable {
 	 * spawn a zombie in column 10 and in random row.
 	 */
 	private void spawnZombie() {
+		//spawn one zombie at once.
 		int r = (new Random()).nextInt(5);
+		int r1 = (new Random()).nextInt(2);
+		ArrayList<AbstractZombie> z = new ArrayList();
+		ConeHeadZombie cz = new ConeHeadZombie();
 		FastZombie fz = new FastZombie();
-		this.board.addModel(fz, r, this.board.getLength() - 1);
+		z.add(cz);
+		z.add(fz);
+		AbstractZombie a = z.get(r1);
+		this.board.addModel(a, r, this.board.getLength()-1);
+		
+		//spawn two zombies at once.
+//		int r = (new Random()).nextInt(5);
+//		int r1 = (new Random()).nextInt(5);
+//		ConeHeadZombie cz = new ConeHeadZombie();
+//		FastZombie fz = new FastZombie();
+//		if (r != r1) {
+//			this.board.addModel(fz, r, this.board.getLength()-1);
+//			this.board.addModel(cz, r1, this.board.getLength()-1);
+//		}
+//		else {
+//			this.board.addModel(fz, r, this.board.getLength()-1);
+//			r1 =(new Random()).nextInt(5);
+//			this.board.addModel(cz, r1, this.board.getLength()-1);
+//		}
 	}
 
 	/*
@@ -138,6 +173,7 @@ public class Game implements Serializable {
 		}
 		return false;
 	}
+
 
   public static Game copy(Game original) {
     Game newGame = null;
