@@ -1,9 +1,9 @@
 /*
- * This class is the build of gui. It has a 5*10 button to represent backyard and and three 
+ * This class is the build of gui. It has a 5*10 button to represent backyard and and three
  * buttons skip, sunflower and peashooter for user to place or direct skip the turn.
  * The design is based on milestone 1. In milstone 1, we make a grid class to show the what is
  * the game going on. In the class, method rendergrid is make connection with gui and grid.
- * So that gui and show what is grid going on. 
+ * So that gui and show what is grid going on.
  */
 package game;
 
@@ -22,7 +22,7 @@ public class GameView extends JFrame {
 	private JMenu opt;
 	private JMenuItem quit, res;
 	private JPanel pvz, info;
-	private JButton skip, sun, pea;
+	private JButton undo, redo, skip, sun, pea;
 	private JTextField point;
 	private JButton[][] gg;
 	private JLabel sp;
@@ -70,6 +70,12 @@ public class GameView extends JFrame {
 				pvz.add(gg[row][column]);
 			}
 		}
+		undo = new JButton("undo");
+		undo.addActionListener(al);
+		undo.setFont(f);
+		redo = new JButton("redo");
+		redo.addActionListener(al);
+		redo.setFont(f);
 		skip = new JButton("skip");
 		skip.addActionListener(al);
 		skip.setFont(f);
@@ -84,6 +90,8 @@ public class GameView extends JFrame {
 		sp.setFont(f);
 		info.add(sp);
 		info.add(point);
+		info.add(undo);
+		info.add(redo);
 		info.add(skip);
 		info.add(sun);
 		info.add(pea);
@@ -99,7 +107,7 @@ public class GameView extends JFrame {
 	}
 
 	/*
-	 * if the grid has the model at a specific location render it to the gui with the model 
+	 * if the grid has the model at a specific location render it to the gui with the model
 	 * image
 	 */
 	public void renderGrid(Grid grid) {

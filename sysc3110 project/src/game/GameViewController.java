@@ -5,11 +5,14 @@ import model.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.util.Stack;
 
 public class GameViewController implements ActionListener {
 
 	// Models
 	private Game game;
+  private Stack<Game> undoStack;
+  private Stack<Game> redoStack;
 
 	// Views
 	private GameView gameView;
@@ -18,6 +21,8 @@ public class GameViewController implements ActionListener {
 
 	GameViewController() {
 		this.game = new Game();
+    this.undoStack = new Stack<Game>();
+    this.redoStack = new Stack<Game>();
 
 		int rows = this.game.getGrid().getHeight();
 		int columns = this.game.getGrid().getLength();
@@ -34,16 +39,18 @@ public class GameViewController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Boolean gameOver = false;
-		
+
 		//Button action.
 		String action = e.getActionCommand();
 		switch (action) {
 		case "pea":
 		case "sun":
+      addUndo();
 			userAction(action);
 			gameOver = this.game.runTurn();
 			break;
 		case "skip":
+      addUndo();
 			gameOver = this.game.runTurn();
 			break;
 		case "quit":
@@ -51,17 +58,33 @@ public class GameViewController implements ActionListener {
 		case "restart":
 			this.game = new Game();
 			break;
+    case "undo":
+      if (this.undoStack.empty()) {
+        JOptionPane.showMessageDialog(null, "Nothing to undo");
+        return;
+      } else {
+        undo();
+      }
+      break;
+    case "redo":
+      if (this.redoStack.empty()) {
+        JOptionPane.showMessageDialog(null, "Nothing to redo");
+        return;
+      } else {
+        redo();
+      }
+      break;
 		}
-		
+
        // everytime the actionPerformed render it to the gui
 		this.gameView.renderGrid(this.game.getGrid());
 		this.gameView.renderSunPoints(this.game.getSp());
 
-		if (gameOver) { // show when the game is over 
+		if (gameOver) { // show when the game is over
 			JOptionPane.showMessageDialog(null, "GAME OVER");
 		}
 	}
-	
+
    // add the model to the grid first
 	private void userAction(String plantOption) {
 		if (this.game.getSp() < 50) {
@@ -86,7 +109,7 @@ public class GameViewController implements ActionListener {
 
 		this.game.getGrid().addModel(plant, row, column);
 	}
-    
+
 	private AbstractPlant getPlant(String plantOption) {
 		while (true) {
 			AbstractPlant plant = selectPlant(plantOption);
@@ -97,7 +120,7 @@ public class GameViewController implements ActionListener {
 			System.out.println("Not enough sun points for selected plant, try again");
 		}
 	}
-	
+
 	private AbstractPlant selectPlant(String plantOption) {
 		switch (plantOption) {
 		case "sun":
@@ -146,7 +169,29 @@ public class GameViewController implements ActionListener {
 			}
 		}
 	}
-	
+
+  private void addUndo() {
+    Game currentState = Game.copy(this.game);
+    this.undoStack.push(currentState);
+  }
+
+  private void undo() {
+    addRedo();
+    Game previousState = this.undoStack.pop();
+    this.game = previousState;
+  }
+
+  private void addRedo() {
+    Game currentState = Game.copy(this.game);
+    this.redoStack.push(currentState);
+  }
+
+  private void redo() {
+    addUndo();
+    Game previousState = this.redoStack.pop();
+    this.game = previousState;
+  }
+
 	//main function will display the gui
 	public static void main(String[] args) {
 		GameViewController g = new GameViewController();

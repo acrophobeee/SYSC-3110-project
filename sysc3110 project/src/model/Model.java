@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Model {
+import java.io.Serializable;
+
+public abstract class Model implements Serializable {
 
 	private ModelType type; // name of plants/zombies
 	private int hp; // heath point for plants / zombies
