@@ -46,6 +46,7 @@ public class GameViewController implements ActionListener {
 		case "pea":
 		case "sun":
 		case "nut":
+		case "rep":
       addUndo();
 			userAction(action);
 			gameOver = this.game.runTurn();
@@ -130,6 +131,8 @@ public class GameViewController implements ActionListener {
 			return new PeaShooter();
 		case "nut":
 			return new Nut();
+		case "rep":
+			return new RePeater();
 		default:
 			System.out.println(plantOption + " isn't a valid option");
 			throw new IllegalArgumentException("bad plant option");

@@ -53,6 +53,9 @@ public class Game implements Serializable {
 				} else if (model instanceof Nut) {
 					nutAction((Nut)model,i,j);
 					System.out.println("Nut" + "[" + i + "," + j + "], Hp = " + model.getHp());
+				} else if (model instanceof RePeater) {
+					RePeaterAction((RePeater)model,i,j);
+					System.out.println("RePeater" + "[" + i + "," + j + "], Hp = " + model.getHp());
 				}
 				if (model instanceof SunFlower) {
 					System.out.println("SunFlower" + "[" + i + "," + j + "], Hp = " + model.getHp());
@@ -90,6 +93,21 @@ public class Game implements Serializable {
 			for (int k = j; k < this.board.getLength(); k++) {
 				if (this.board.getModel(i, k) instanceof AbstractZombie) {
 					s.attack(this.board.getModel(i, k));
+				}
+			}
+		}
+	}
+	
+	/*
+	 * action for Repeater to attck zombie and remove while killed.
+	 */
+	private void RePeaterAction(RePeater r, int i, int j) {
+		if (r.getHp()<=0) {
+			this.board.removeModel(r, i, j);
+		}else {
+			for (int k = j; k < this.board.getLength(); k++) {
+				if (this.board.getModel(i, k) instanceof AbstractZombie) {
+					r.attack(this.board.getModel(i, k));
 				}
 			}
 		}

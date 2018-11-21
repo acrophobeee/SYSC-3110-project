@@ -22,7 +22,7 @@ public class GameView extends JFrame {
 	private JMenu opt;
 	private JMenuItem quit, res;
 	private JPanel pvz, info;
-	private JButton undo, redo, skip, sun, pea, nut;
+	private JButton undo, redo, skip, sun, pea, nut, rep;
 	private JTextField point;
 	private JButton[][] gg;
 	private JLabel sp;
@@ -32,6 +32,7 @@ public class GameView extends JFrame {
 	private ImageIcon zome = new ImageIcon("zom.jpg");
 	private ImageIcon nutp = new ImageIcon("nut.png");
 	private ImageIcon chz = new ImageIcon("chz.jpg");
+	private ImageIcon repp = new ImageIcon("repeater.png");
 
 	public GameView(ActionListener al, int rows, int columns) {
 		super();
@@ -90,6 +91,9 @@ public class GameView extends JFrame {
 		nut = new JButton("nut", nutp);
 		nut.setFont(f);
 		nut.addActionListener(al);
+		rep = new JButton("rep", repp);
+		rep.setFont(f);
+		rep.addActionListener(al);
 		sp = new JLabel();
 		sp.setText("Sun points: ");
 		sp.setFont(f);
@@ -101,6 +105,7 @@ public class GameView extends JFrame {
 		info.add(sun);
 		info.add(pea);
 		info.add(nut);
+		info.add(rep);
 		this.add(b);
 		this.add(pvz);
 		this.add(info);
@@ -139,6 +144,8 @@ public class GameView extends JFrame {
 					this.gg[row][column].setIcon(nutp);
 				} else if (m instanceof ConeHeadZombie) {
 					this.gg[row][column].setIcon(chz);
+				} else if (m instanceof RePeater) {
+					this.gg[row][column].setIcon(repp);
 				}
 
 			}
