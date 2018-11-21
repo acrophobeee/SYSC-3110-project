@@ -2,10 +2,11 @@ package game;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.io.Serializable;
 
 import model.*;
 
-public class Grid {
+public class Grid implements Serializable {
 
 	final private int gridHeight = 5;
 	final private int gridLength = 10;

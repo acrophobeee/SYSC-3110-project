@@ -5,11 +5,16 @@ produce by weihongshen, xinyuchen, jacky chiu, kirin
 
 import java.lang.Integer;
 import java.util.Random;
-
+import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 
 import model.*;
 
-public class Game {
+public class Game implements Serializable {
 
 	private Grid board;
 	private int sp; // sun points.
@@ -133,4 +138,30 @@ public class Game {
 		}
 		return false;
 	}
+
+  public static Game copy(Game original) {
+    Game newGame = null;
+    try {
+      // Write the object out to a byte array
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+      ObjectOutputStream out = new ObjectOutputStream(bos);
+      out.writeObject(original);
+      out.flush();
+      out.close();
+
+      // Make an input stream from the byte array and read
+      // a copy of the object back in.
+      ObjectInputStream in = new ObjectInputStream(
+          new ByteArrayInputStream(bos.toByteArray()));
+      newGame = (Game) in.readObject();
+    }
+    catch(IOException e) {
+      e.printStackTrace();
+    }
+    catch(ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+
+    return newGame;
+  }
 }
