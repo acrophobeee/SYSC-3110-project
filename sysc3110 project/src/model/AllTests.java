@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
   FastZombieTest.class,
   ModelTypeTest.class,
   NutTest.class,
+  BombTest.class,
 })
 
 public class AllTests {

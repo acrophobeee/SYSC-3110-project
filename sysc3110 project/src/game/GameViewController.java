@@ -48,15 +48,11 @@ public class GameViewController implements ActionListener {
 		case "sun":
 		case "nut":
 		case "rep":
+		case "tnt":
 			addUndo();
 			userAction(action);
 			gameOver = this.game.runTurn();
-			break;
-		case "tnt":	
-			addUndo();
-			userAction(action);
-			gameOver = this.game.runTurn();
-			break;
+			break;	
 		case "skip":
 			addUndo();
 			gameOver = this.game.runTurn();

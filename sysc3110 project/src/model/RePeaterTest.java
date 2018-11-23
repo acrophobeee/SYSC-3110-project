@@ -18,7 +18,7 @@ public class RePeaterTest {
 
 	// Test constructor and ModelType
 	@Test
-	public void testPeaShooter() {
+	public void testRePeater() {
 		assert (p.getType() == ModelType.RE_PEATER);
 	}
 
@@ -28,5 +28,8 @@ public class RePeaterTest {
 		FastZombie z = new FastZombie();
 		p.attack(z);
 		assert (p.getCd() == 1);
+		assert (z.getHp() == 50);
+		p.attack(z);
+		assert (z.getHp() == 50);
 	}
 }
