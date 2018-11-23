@@ -22,6 +22,6 @@ public class BombTest {
 	// test constructor and ModelType
 	@Test
 	public void testBomb() {
-		assert (z.getType() == ModelType.Bomb);
+		assert (z.getType() == ModelType.BOMB);
 	}
 }
