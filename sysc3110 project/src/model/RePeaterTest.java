@@ -28,8 +28,5 @@ public class RePeaterTest {
 		FastZombie z = new FastZombie();
 		p.attack(z);
 		assert (p.getCd() == 1);
-		assert (z.getHp() == 75);
-		p.attack(z);
-		assert (z.getHp() == 75);
 	}
 }

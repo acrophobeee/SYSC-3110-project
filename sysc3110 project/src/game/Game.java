@@ -63,6 +63,9 @@ public class Game implements Serializable {
 				if (model instanceof PeaShooter) {
 					System.out.println("PeaShooter" + "[" + i + "," + j + "], Hp = " + model.getHp());
 				}
+				else if (model instanceof Bomb) {
+					BombAction((Bomb)model,i,j);
+					System.out.println("Bomb" + "[" + i + "," + j + "], Hp = " + model.getHp());
 			}
 		}
 
@@ -70,9 +73,10 @@ public class Game implements Serializable {
 		System.out.println("");
 		System.out.println(this.board);
 
+		
+	}
 		return this.isGameOver();
 	}
-
 	/*
 	 * sun flower action to generate sun point and remove model if the flower get killed.
 	 */
@@ -137,6 +141,18 @@ public class Game implements Serializable {
 		}
 	}
 
+	/*
+	 * action for nut to remove while killed.
+	 */
+	private void BombAction(Bomb n, int i, int j) {
+		Model model = this.board.getModel(i, j+1);
+		if (model instanceof AbstractZombie) {
+			this.board.removeModel(n, i, j);
+			model.setHp(-1);
+			
+		}
+	}
+	
 	public int getSp() {
 		return sp;
 	}

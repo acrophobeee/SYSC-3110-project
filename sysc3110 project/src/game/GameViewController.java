@@ -11,8 +11,8 @@ public class GameViewController implements ActionListener {
 
 	// Models
 	private Game game;
-  private Stack<Game> undoStack;
-  private Stack<Game> redoStack;
+	private Stack<Game> undoStack;
+	private Stack<Game> redoStack;
 
 	// Views
 	private GameView gameView;
@@ -21,8 +21,8 @@ public class GameViewController implements ActionListener {
 
 	GameViewController() {
 		this.game = new Game();
-    this.undoStack = new Stack<Game>();
-    this.redoStack = new Stack<Game>();
+		this.undoStack = new Stack<Game>();
+		this.redoStack = new Stack<Game>();
 
 		int rows = this.game.getGrid().getHeight();
 		int columns = this.game.getGrid().getLength();
@@ -40,19 +40,25 @@ public class GameViewController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Boolean gameOver = false;
 
-		//Button action.
+						
+		// Button action.
 		String action = e.getActionCommand();
 		switch (action) {
 		case "pea":
 		case "sun":
 		case "nut":
 		case "rep":
-      addUndo();
+			addUndo();
+			userAction(action);
+			gameOver = this.game.runTurn();
+			break;
+		case "tnt":	
+			addUndo();
 			userAction(action);
 			gameOver = this.game.runTurn();
 			break;
 		case "skip":
-      addUndo();
+			addUndo();
 			gameOver = this.game.runTurn();
 			break;
 		case "quit":
@@ -60,25 +66,24 @@ public class GameViewController implements ActionListener {
 		case "restart":
 			this.game = new Game();
 			break;
-    case "undo":
-      if (this.undoStack.empty()) {
-        JOptionPane.showMessageDialog(null, "Nothing to undo");
-        return;
-      } else {
-        undo();
-      }
-      break;
-    case "redo":
-      if (this.redoStack.empty()) {
-        JOptionPane.showMessageDialog(null, "Nothing to redo");
-        return;
-      } else {
-        redo();
-      }
-      break;
+		case "undo":
+			if (this.undoStack.empty()) {
+				JOptionPane.showMessageDialog(null, "Nothing to undo");
+				return;
+			} else {
+				undo();
+			}
+			break;
+		case "redo":
+			if (this.redoStack.empty()) {
+				JOptionPane.showMessageDialog(null, "Nothing to redo");
+				return;
+			} else {
+				redo();
+			}
+			break;
 		}
-
-       // everytime the actionPerformed render it to the gui
+		// everytime the actionPerformed render it to the gui
 		this.gameView.renderGrid(this.game.getGrid());
 		this.gameView.renderSunPoints(this.game.getSp());
 
@@ -87,7 +92,7 @@ public class GameViewController implements ActionListener {
 		}
 	}
 
-   // add the model to the grid first
+	// add the model to the grid first
 	private void userAction(String plantOption) {
 		if (this.game.getSp() < 50) {
 			JOptionPane.showMessageDialog(null, "You don't have enough Sun point, skip round");
@@ -96,9 +101,15 @@ public class GameViewController implements ActionListener {
 		}
 
 		AbstractPlant plant = getPlant(plantOption);
+		if (plant == null) {
+
+			return;
+   
+		}
 		int row, column;
 
 		while (true) {
+
 			row = getRowFromUser();
 			column = getColumnFromUser();
 
@@ -108,18 +119,17 @@ public class GameViewController implements ActionListener {
 			}
 			JOptionPane.showMessageDialog(null, "Location unavailable, please select another location");
 		}
-
 		this.game.getGrid().addModel(plant, row, column);
 	}
 
 	private AbstractPlant getPlant(String plantOption) {
-		while (true) {
-			AbstractPlant plant = selectPlant(plantOption);
-			if (plant.getCost() <= this.game.getSp()) {
-				this.game.setSp(this.game.getSp() - plant.getCost());
-				return plant;
-			}
-			System.out.println("Not enough sun points for selected plant, try again");
+		AbstractPlant plant = selectPlant(plantOption);
+		if (plant.getCost() <= this.game.getSp()) {
+			this.game.setSp(this.game.getSp() - plant.getCost());
+			return plant;
+		} else {
+			JOptionPane.showMessageDialog(null, "Not enough sun points, Want to redo please undo step!");
+			return null;
 		}
 	}
 
@@ -133,6 +143,8 @@ public class GameViewController implements ActionListener {
 			return new Nut();
 		case "rep":
 			return new RePeater();
+		case "tnt":
+			return new Bomb();
 		default:
 			System.out.println(plantOption + " isn't a valid option");
 			throw new IllegalArgumentException("bad plant option");
@@ -157,7 +169,7 @@ public class GameViewController implements ActionListener {
 		}
 	}
 
-	//Get the column to place plants.
+	// Get the column to place plants.
 	private int getColumnFromUser() {
 		System.out.println("Select column to place plant on grid (indexed from 0)");
 
@@ -176,29 +188,29 @@ public class GameViewController implements ActionListener {
 		}
 	}
 
-  private void addUndo() {
-    Game currentState = Game.copy(this.game);
-    this.undoStack.push(currentState);
-  }
+	private void addUndo() {
+		Game currentState = Game.copy(this.game);
+		this.undoStack.push(currentState);
+	}
 
-  private void undo() {
-    addRedo();
-    Game previousState = this.undoStack.pop();
-    this.game = previousState;
-  }
+	private void undo() {
+		addRedo();
+		Game previousState = this.undoStack.pop();
+		this.game = previousState;
+	}
 
-  private void addRedo() {
-    Game currentState = Game.copy(this.game);
-    this.redoStack.push(currentState);
-  }
+	private void addRedo() {
+		Game currentState = Game.copy(this.game);
+		this.redoStack.push(currentState);
+	}
 
-  private void redo() {
-    addUndo();
-    Game previousState = this.redoStack.pop();
-    this.game = previousState;
-  }
+	private void redo() {
+		addUndo();
+		Game previousState = this.redoStack.pop();
+		this.game = previousState;
+	}
 
-	//main function will display the gui
+	// main function will display the gui
 	public static void main(String[] args) {
 		GameViewController g = new GameViewController();
 		g.run();

@@ -22,7 +22,7 @@ public class GameView extends JFrame {
 	private JMenu opt;
 	private JMenuItem quit, res;
 	private JPanel pvz, info;
-	private JButton undo, redo, skip, sun, pea, nut, rep;
+	private JButton undo, redo, skip, sun, pea, nut, rep, tnt;
 	private JTextField point;
 	private JButton[][] gg;
 	private JLabel sp;
@@ -33,7 +33,8 @@ public class GameView extends JFrame {
 	private ImageIcon nutp = new ImageIcon("nut.png");
 	private ImageIcon chz = new ImageIcon("chz.jpg");
 	private ImageIcon repp = new ImageIcon("repeater.png");
-
+	private ImageIcon pot = new ImageIcon("pot.jpg");
+	
 	public GameView(ActionListener al, int rows, int columns) {
 		super();
 		this.rows = rows;
@@ -94,6 +95,11 @@ public class GameView extends JFrame {
 		rep = new JButton("rep", repp);
 		rep.setFont(f);
 		rep.addActionListener(al);
+		
+		tnt = new JButton("tnt", pot);
+		tnt.setFont(f);
+		tnt.addActionListener(al);
+		
 		sp = new JLabel();
 		sp.setText("Sun points: ");
 		sp.setFont(f);
@@ -106,6 +112,7 @@ public class GameView extends JFrame {
 		info.add(pea);
 		info.add(nut);
 		info.add(rep);
+		info.add(tnt);
 		this.add(b);
 		this.add(pvz);
 		this.add(info);
@@ -146,6 +153,8 @@ public class GameView extends JFrame {
 					this.gg[row][column].setIcon(chz);
 				} else if (m instanceof RePeater) {
 					this.gg[row][column].setIcon(repp);
+				}else if (m instanceof Bomb) {
+					this.gg[row][column].setIcon(pot);
 				}
 
 			}
