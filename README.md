@@ -14,7 +14,7 @@ Issues:
 When the zombie died, new zombie not always appear in the columns 10. Instead, sometimes reappear in column 10, sometimes in column 9.
 
 Roadmap:
-Next milestone, we will add more level of difficulties for the game for users. 
+Next milestone, we will add more level of difficulties for the game for users. Second, we will be add the save and load function for the game so that users save the game and continue the game next time just need to load the game file. 
 
 
 MileStone 2
