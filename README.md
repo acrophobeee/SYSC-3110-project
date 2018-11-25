@@ -1,4 +1,14 @@
 # SYSC-3110-project-Group-1
+MileStone 3
+
+User-visible change
+
+Add redo and undo buuton for the Buuton in the game gui, so that users can repeat the previous step, previous and previous step. And also add several new game models in the game, includes nuts, double-peashooter, potato bomb for the plants and conehead zombie for the zombies. So, we have five kinds of plants and two kinds of zombies in the game.
+
+UML and SEQ diagram change:
+
+update the uml diagram with new models and add more method in the game class and game controller class so that the diagram match with the undo and redo button. Add several life lines for new models and update the game and game controller life lines for the sequence diagram.
+
 
 MileStone 2
 
