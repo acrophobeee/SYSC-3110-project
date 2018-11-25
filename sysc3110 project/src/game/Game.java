@@ -3,7 +3,6 @@ package game;
 produce by weihongshen, xinyuchen, jacky chiu, kirin
 */
 
-import java.lang.Integer;
 import java.util.ArrayList;
 import java.util.Random;
 import java.io.IOException;

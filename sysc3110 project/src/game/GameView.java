@@ -27,7 +27,7 @@ public class GameView extends JFrame {
 	private JButton[][] gg;
 	private JLabel sp;
 	private int rows, columns;
-	private ImageIcon peacho = new ImageIcon("pea.jpg"); // three images for zombie and plants
+	private ImageIcon peacho = new ImageIcon("pea.jpg"); // six images for zombie and plants
 	private ImageIcon sunn = new ImageIcon("images.jpg");
 	private ImageIcon zome = new ImageIcon("zom.jpg");
 	private ImageIcon nutp = new ImageIcon("nut.png");
@@ -35,7 +35,7 @@ public class GameView extends JFrame {
 	private ImageIcon repp = new ImageIcon("repeater.png");
 	private ImageIcon pot = new ImageIcon("pot.jpg");
 	
-	public GameView(ActionListener al, int rows, int columns) {
+	public GameView(ActionListener al, int rows, int columns) { //build the gui
 		super();
 		this.rows = rows;
 		this.columns = columns;
@@ -164,8 +164,8 @@ public class GameView extends JFrame {
 	//Set the sun point textfield while use or generate
 	public void renderSunPoints(int sp) {
 		this.point.setText("" + sp);
-	}
-
+	} 
+	
 	public void display() {
 		this.setVisible(true);
 	}

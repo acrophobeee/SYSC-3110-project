@@ -38,10 +38,9 @@ public class GameViewController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Boolean gameOver = false;
-
-						
-		// Button action.
+		Boolean gameOver = false;					
+		// Button action. 
+		//(add five new buttons nut, rep,tnt, redo and undo button for milestone 3 
 		String action = e.getActionCommand();
 		switch (action) {
 		case "pea":
@@ -62,7 +61,7 @@ public class GameViewController implements ActionListener {
 		case "restart":
 			this.game = new Game();
 			break;
-		case "undo":
+		case "undo": // use stack to implement the redo and undo 
 			if (this.undoStack.empty()) {
 				JOptionPane.showMessageDialog(null, "Nothing to undo");
 				return;
@@ -89,6 +88,7 @@ public class GameViewController implements ActionListener {
 	}
 
 	// add the model to the grid first
+	// if no plant to place direct pass the turn
 	private void userAction(String plantOption) {
 		if (this.game.getSp() < 50) {
 			JOptionPane.showMessageDialog(null, "You don't have enough Sun point, skip round");
@@ -117,7 +117,8 @@ public class GameViewController implements ActionListener {
 		}
 		this.game.getGrid().addModel(plant, row, column);
 	}
-
+	
+   // if sun points enough choose the plant, otherwise return null
 	private AbstractPlant getPlant(String plantOption) {
 		AbstractPlant plant = selectPlant(plantOption);
 		if (plant.getCost() <= this.game.getSp()) {
@@ -183,12 +184,13 @@ public class GameViewController implements ActionListener {
 			}
 		}
 	}
-
+	
+    // copy temporary game and push to stack
 	private void addUndo() {
 		Game currentState = Game.copy(this.game);
 		this.undoStack.push(currentState);
 	}
-
+    // copy the stack's game model ans set the game to this.
 	private void undo() {
 		addRedo();
 		Game previousState = this.undoStack.pop();
