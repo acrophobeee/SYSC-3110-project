@@ -9,6 +9,13 @@ UML and SEQ diagram change:
 
 update the uml diagram with new models and add more method in the game class and game controller class so that the diagram match with the undo and redo button. Add several life lines for new models and update the game and game controller life lines for the sequence diagram.
 
+Issues:
+
+When the zombie died, new zombie not always appear in the columns 10. Instead, sometimes reappear in column 10, sometimes in column 9.
+
+Roadmap:
+Next milestone, we will add more level of difficulties for the game for users. 
+
 
 MileStone 2
 
