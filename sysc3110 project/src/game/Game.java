@@ -16,7 +16,7 @@ import model.*;
 
 public class Game implements Serializable {
 
-	private Grid board;
+	public Grid board;
 	private int sp; // sun points.
 
 	//Create a new game.
@@ -79,7 +79,7 @@ public class Game implements Serializable {
 	/*
 	 * sun flower action to generate sun point and remove model if the flower get killed.
 	 */
-	private void sunFlowerAction(SunFlower s, int i, int j) {
+	public void sunFlowerAction(SunFlower s, int i, int j) {
 		this.sp += s.generateSun();
 		if (s.getHp() <= 0) {
 			this.board.removeModel(s, i, j);

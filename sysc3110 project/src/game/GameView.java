@@ -124,6 +124,14 @@ public class GameView extends JFrame {
 		this.setSize(1100, 800);
 	}
 
+	public String getSun() {
+		return sun.getText();
+	}
+
+	public void setSun(JButton sun) {
+		this.sun = sun;
+	}
+
 	/*
 	 * if the grid has the model at a specific location render it to the gui with the model
 	 * image

@@ -17,8 +17,22 @@ public class GameViewController implements ActionListener {
 	// Views
 	private GameView gameView;
 
-	private ImageIcon image;
+	public Game getGame() {
+		return game;
+	}
 
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	public GameView getGameView() {
+		return gameView;
+	}
+
+	public void setGameView(GameView gameView) {
+		this.gameView = gameView;
+	}
+	
 	GameViewController() {
 		this.game = new Game();
 		this.undoStack = new Stack<Game>();
