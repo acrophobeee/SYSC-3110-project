@@ -1,13 +1,24 @@
 package game;
 
-import model.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Stack;
 
-public class GameViewController implements ActionListener {
+import javax.swing.JOptionPane;
+
+import model.AbstractPlant;
+import model.Bomb;
+import model.Model;
+import model.Nut;
+import model.PeaShooter;
+import model.RePeater;
+import model.SunFlower;
+
+public class GameViewController implements ActionListener, Serializable {
 
 	// Models
 	private Game game;
@@ -32,7 +43,7 @@ public class GameViewController implements ActionListener {
 	public void setGameView(GameView gameView) {
 		this.gameView = gameView;
 	}
-	
+
 	GameViewController() {
 		this.game = new Game();
 		this.undoStack = new Stack<Game>();
@@ -52,9 +63,9 @@ public class GameViewController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Boolean gameOver = false;					
-		// Button action. 
-		//(add five new buttons nut, rep,tnt, redo and undo button for milestone 3 
+		Boolean gameOver = false;
+		// Button action.
+		// (add five new buttons nut, rep,tnt, redo and undo button for milestone 3
 		String action = e.getActionCommand();
 		switch (action) {
 		case "pea":
@@ -65,7 +76,7 @@ public class GameViewController implements ActionListener {
 			addUndo();
 			userAction(action);
 			gameOver = this.game.runTurn();
-			break;	
+			break;
 		case "skip":
 			addUndo();
 			gameOver = this.game.runTurn();
@@ -75,7 +86,7 @@ public class GameViewController implements ActionListener {
 		case "restart":
 			this.game = new Game();
 			break;
-		case "undo": // use stack to implement the redo and undo 
+		case "undo": // use stack to implement the redo and undo
 			if (this.undoStack.empty()) {
 				JOptionPane.showMessageDialog(null, "Nothing to undo");
 				return;
@@ -91,6 +102,24 @@ public class GameViewController implements ActionListener {
 				redo();
 			}
 			break;
+		case "save":
+			// save the current state
+			String path = JOptionPane.showInputDialog(null, "Enter location to save to:");
+			if (path == null || path.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Path must be non empty string");
+				break;
+			}
+			saveToDisk(path);
+			break;
+		case "load":
+			// load the state from the file
+			path = JOptionPane.showInputDialog(null, "Enter location to load from:");
+			if (path == null || path.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Path must be non empty string");
+				break;
+			}
+			loadFromDisk(path);
+			break;
 		}
 		// everytime the actionPerformed render it to the gui
 		this.gameView.renderGrid(this.game.getGrid());
@@ -99,6 +128,31 @@ public class GameViewController implements ActionListener {
 		if (gameOver) { // show when the game is over
 			JOptionPane.showMessageDialog(null, "GAME OVER");
 		}
+	}
+
+	// serialize the state and save it to disk
+	// at the location provided 'path'
+	private void saveToDisk(String path) {
+		System.out.println("saving to: " + path);
+		try {
+			// write serialized data to file at path
+			FileOutputStream fileOut = new FileOutputStream(path);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(this);
+			out.close();
+			fileOut.close();
+		} catch (IOException i) {
+			// Warn the user saving failed
+			i.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Saving failed, do you have proper file access?");
+		}
+	}
+
+	// load the game view controller from disk
+	// from the location provided
+	// kill the old one, and start the newly imported one with run();
+	private void loadFromDisk(String path) {
+		System.out.println("loading from: " + path);
 	}
 
 	// add the model to the grid first
@@ -114,7 +168,7 @@ public class GameViewController implements ActionListener {
 		if (plant == null) {
 
 			return;
-   
+
 		}
 		int row, column;
 
@@ -131,8 +185,8 @@ public class GameViewController implements ActionListener {
 		}
 		this.game.getGrid().addModel(plant, row, column);
 	}
-	
-   // if sun points enough choose the plant, otherwise return null
+
+	// if sun points enough choose the plant, otherwise return null
 	private AbstractPlant getPlant(String plantOption) {
 		AbstractPlant plant = selectPlant(plantOption);
 		if (plant.getCost() <= this.game.getSp()) {
@@ -198,13 +252,14 @@ public class GameViewController implements ActionListener {
 			}
 		}
 	}
-	
-    // copy temporary game and push to stack
+
+	// copy temporary game and push to stack
 	private void addUndo() {
 		Game currentState = Game.copy(this.game);
 		this.undoStack.push(currentState);
 	}
-    // copy the stack's game model ans set the game to this.
+
+	// copy the stack's game model ans set the game to this.
 	private void undo() {
 		addRedo();
 		Game previousState = this.undoStack.pop();
