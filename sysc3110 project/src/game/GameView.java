@@ -20,7 +20,7 @@ import javax.swing.*;
 
 public class GameView extends JFrame {
 	private JMenu opt;
-	private JMenuItem quit, res;
+	private JMenuItem quit, res, save, load;
 	private JPanel pvz, info;
 	private JButton undo, redo, skip, sun, pea, nut, rep, tnt;
 	private JTextField point;
@@ -34,15 +34,15 @@ public class GameView extends JFrame {
 	private ImageIcon chz = new ImageIcon("chz.jpg");
 	private ImageIcon repp = new ImageIcon("repeater.png");
 	private ImageIcon pot = new ImageIcon("pot.jpg");
-	
-	public GameView(ActionListener al, int rows, int columns) { //build the gui
+
+	public GameView(ActionListener al, int rows, int columns) { // build the gui
 		super();
 		this.rows = rows;
 		this.columns = columns;
 		this.setTitle("Plant vs Zombie");
 		this.setLayout(new BorderLayout());
 		Font f = new Font("Trial", Font.BOLD, 25);
-		//Create menu and menu item with restart and quit.
+		// Create menu and menu item with restart and quit.
 		JMenuBar b = new JMenuBar();
 		opt = new JMenu("option");
 		opt.setFont(f);
@@ -56,16 +56,28 @@ public class GameView extends JFrame {
 		quit.addActionListener(al);
 		quit.setFont(f);
 		opt.add(quit);
-		//pvz panel for showing the square with model.
+
+		save = new JMenuItem("save");
+		save.addActionListener(al);
+		save.setFont(f);
+		opt.add(save);
+
+		load = new JMenuItem("load");
+		load.addActionListener(al);
+		load.setFont(f);
+		opt.add(load);
+
+		// pvz panel for showing the square with model.
 		pvz = new JPanel(new GridLayout(rows, columns));
-		//info panel for showing sun point and contain three button for skipping, placing sun flower and pea shooter.
+		// info panel for showing sun point and contain three button for skipping,
+		// placing sun flower and pea shooter.
 		info = new JPanel(new GridLayout(1, 3));
 		info.setPreferredSize(new Dimension(300, 100));
 		gg = new JButton[rows][columns];
 		point = new JTextField();
 		point.setEditable(false);
 		point.setFont(f);
-		//Create JButton with size row*column.
+		// Create JButton with size row*column.
 		for (int row = 0; row < rows; row++) {
 			for (int column = 0; column < columns; column++) {
 				gg[row][column] = new JButton();
@@ -95,11 +107,11 @@ public class GameView extends JFrame {
 		rep = new JButton("rep", repp);
 		rep.setFont(f);
 		rep.addActionListener(al);
-		
+
 		tnt = new JButton("tnt", pot);
 		tnt.setFont(f);
 		tnt.addActionListener(al);
-		
+
 		sp = new JLabel();
 		sp.setText("Sun points: ");
 		sp.setFont(f);
@@ -133,8 +145,8 @@ public class GameView extends JFrame {
 	}
 
 	/*
-	 * if the grid has the model at a specific location render it to the gui with the model
-	 * image
+	 * if the grid has the model at a specific location render it to the gui with
+	 * the model image
 	 */
 	public void renderGrid(Grid grid) {
 		if (grid.getHeight() != this.rows) {
@@ -161,7 +173,7 @@ public class GameView extends JFrame {
 					this.gg[row][column].setIcon(chz);
 				} else if (m instanceof RePeater) {
 					this.gg[row][column].setIcon(repp);
-				}else if (m instanceof Bomb) {
+				} else if (m instanceof Bomb) {
 					this.gg[row][column].setIcon(pot);
 				}
 
@@ -169,11 +181,11 @@ public class GameView extends JFrame {
 		}
 	}
 
-	//Set the sun point textfield while use or generate
+	// Set the sun point textfield while use or generate
 	public void renderSunPoints(int sp) {
 		this.point.setText("" + sp);
-	} 
-	
+	}
+
 	public void display() {
 		this.setVisible(true);
 	}
