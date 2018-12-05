@@ -5,7 +5,21 @@ import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.awt.event.ActionEvent;
+import java.awt.Component;
 import model.SunFlower;
+
+class MockDialog implements Dialog {
+  public String input;
+
+  public String showInputDialog(Component parentComponent, Object message) {
+    return this.input;
+  }
+
+  public void showMessageDialog(Component parentComponent, Object message) {
+    return;
+  }
+}
 
 public class GameControllerTest {
 
@@ -14,7 +28,6 @@ public class GameControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		g = new GameViewController();
-		g.run();
 	}
 
 	@Test
@@ -33,9 +46,7 @@ public class GameControllerTest {
 
 	@Test
 	public void testButton() {
-
 		assertEquals("sun", g.getGameView().getSun());
-
 	}
 
 	@Test
@@ -61,8 +72,27 @@ public class GameControllerTest {
 		SunFlower s = new SunFlower();
 		g.getGame().board.addModel(s, 1, 9);
 		assertEquals(null, g.getGame().board.getModel(1, 8));
-
 	}
+
+	@Test
+	public void testUserActionDontCrashOnCancel() {
+    ActionEvent action = new ActionEvent(this, 0, "pea");
+    g.setDialog(new MockDialog());
+    g.actionPerformed(action);
+  }
+
+  @Test
+	public void testUserActionPlacesPlant() {
+    MockDialog mock = new MockDialog();
+    mock.input = Integer.toString(1);
+    g.setDialog(mock);
+
+    ActionEvent action = new ActionEvent(this, 0, "sun");
+    g.actionPerformed(action);
+
+    Boolean isSun = g.getGame().getGrid().getModel(1, 1) instanceof SunFlower;
+		assert(isSun);
+  }
 
 	@After
 	public void tearDown() throws Exception {

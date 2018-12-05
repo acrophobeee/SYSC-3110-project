@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
+import java.awt.Component;
 
 import model.AbstractPlant;
 import model.Bomb;
@@ -26,6 +27,7 @@ public class GameViewController implements ActionListener, Serializable {
 	private Stack<Game> redoStack;
 
 	// Views
+  private Dialog dialog;
 	private GameView gameView;
 
 	public Game getGame() {
@@ -44,6 +46,10 @@ public class GameViewController implements ActionListener, Serializable {
 		this.gameView = gameView;
 	}
 
+	public void setDialog(Dialog d) {
+		this.dialog = d;
+	}
+
 	GameViewController() {
 		this.game = new Game();
 		this.undoStack = new Stack<Game>();
@@ -51,6 +57,8 @@ public class GameViewController implements ActionListener, Serializable {
 
 		int rows = this.game.getGrid().getHeight();
 		int columns = this.game.getGrid().getLength();
+
+    this.dialog = new GUIDialog();
 
 		this.gameView = new GameView(this, rows, columns);
 		this.gameView.renderGrid(this.game.getGrid());
@@ -67,6 +75,7 @@ public class GameViewController implements ActionListener, Serializable {
 		// Button action.
 		// (add five new buttons nut, rep,tnt, redo and undo button for milestone 3
 		String action = e.getActionCommand();
+    try {
 		switch (action) {
 		case "pea":
 		case "sun":
@@ -88,7 +97,7 @@ public class GameViewController implements ActionListener, Serializable {
 			break;
 		case "undo": // use stack to implement the redo and undo
 			if (this.undoStack.empty()) {
-				JOptionPane.showMessageDialog(null, "Nothing to undo");
+				this.dialog.showMessageDialog(null, "Nothing to undo");
 				return;
 			} else {
 				undo();
@@ -96,7 +105,7 @@ public class GameViewController implements ActionListener, Serializable {
 			break;
 		case "redo":
 			if (this.redoStack.empty()) {
-				JOptionPane.showMessageDialog(null, "Nothing to redo");
+				this.dialog.showMessageDialog(null, "Nothing to redo");
 				return;
 			} else {
 				redo();
@@ -104,29 +113,37 @@ public class GameViewController implements ActionListener, Serializable {
 			break;
 		case "save":
 			// save the current state
-			String path = JOptionPane.showInputDialog(null, "Enter location to save to:");
+			String path = this.dialog.showInputDialog(null, "Enter location to save to:");
 			if (path == null || path.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Path must be non empty string");
+				this.dialog.showMessageDialog(null, "Path must be non empty string");
 				break;
 			}
 			saveToDisk(path);
 			break;
 		case "load":
 			// load the state from the file
-			path = JOptionPane.showInputDialog(null, "Enter location to load from:");
+			path = this.dialog.showInputDialog(null, "Enter location to load from:");
 			if (path == null || path.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Path must be non empty string");
+				this.dialog.showMessageDialog(null, "Path must be non empty string");
 				break;
 			}
 			loadFromDisk(path);
 			break;
 		}
+    } catch (UserCancelledAction ex) {
+      // Didn't run game turn on action cancelled.
+      // Remove from cancelled state from undo stack.
+      this.undoStack.pop();
+      // Continue at the same state.
+      return;
+
+    }
 		// everytime the actionPerformed render it to the gui
 		this.gameView.renderGrid(this.game.getGrid());
 		this.gameView.renderSunPoints(this.game.getSp());
 
 		if (gameOver) { // show when the game is over
-			JOptionPane.showMessageDialog(null, "GAME OVER");
+			this.dialog.showMessageDialog(null, "GAME OVER");
 		}
 	}
 
@@ -144,7 +161,7 @@ public class GameViewController implements ActionListener, Serializable {
 		} catch (IOException i) {
 			// Warn the user saving failed
 			i.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Saving failed, do you have proper file access?");
+			this.dialog.showMessageDialog(null, "Saving failed, do you have proper file access?");
 		}
 	}
 
@@ -157,21 +174,18 @@ public class GameViewController implements ActionListener, Serializable {
 
 	// add the model to the grid first
 	// if no plant to place direct pass the turn
-	private void userAction(String plantOption) {
+	private void userAction(String plantOption) throws UserCancelledAction {
 		if (this.game.getSp() < 50) {
-			JOptionPane.showMessageDialog(null, "You don't have enough Sun point, skip round");
-			;
+			this.dialog.showMessageDialog(null, "You don't have enough Sun point, skip round");
 			return;
 		}
 
 		AbstractPlant plant = getPlant(plantOption);
 		if (plant == null) {
-
 			return;
-
 		}
-		int row, column;
 
+		int row, column;
 		while (true) {
 
 			row = getRowFromUser();
@@ -181,7 +195,7 @@ public class GameViewController implements ActionListener, Serializable {
 			if (m == null) {
 				break;
 			}
-			JOptionPane.showMessageDialog(null, "Location unavailable, please select another location");
+			this.dialog.showMessageDialog(null, "Location unavailable, please select another location");
 		}
 		this.game.getGrid().addModel(plant, row, column);
 	}
@@ -193,7 +207,7 @@ public class GameViewController implements ActionListener, Serializable {
 			this.game.setSp(this.game.getSp() - plant.getCost());
 			return plant;
 		} else {
-			JOptionPane.showMessageDialog(null, "Not enough sun points, Want to redo please undo step!");
+			this.dialog.showMessageDialog(null, "Not enough sun points, Want to redo please undo step!");
 			return null;
 		}
 	}
@@ -217,38 +231,38 @@ public class GameViewController implements ActionListener, Serializable {
 	}
 
 	// Get the row to place plants.
-	private int getRowFromUser() {
+	private int getRowFromUser() throws UserCancelledAction {
 		System.out.println("Select row to place plant on grid (indexed from 0)");
 
 		while (true) {
-			String rows = JOptionPane.showInputDialog(null, "Input place row", JOptionPane.QUESTION_MESSAGE);
-			if (rows == null) {
-				System.exit(0);
-			}
+			String rows = this.dialog.showInputDialog(null, "Input place row");
+      if (rows == null) {
+        throw new UserCancelledAction();
+      }
 			int row = Integer.parseInt(rows);
 			if (row >= 0 && row < this.game.getGrid().getHeight()) {
 				return row;
 			} else {
-				JOptionPane.showMessageDialog(null, "Invalid row, try again");
+				this.dialog.showMessageDialog(null, "Invalid row, try again");
 			}
 		}
 	}
 
 	// Get the column to place plants.
-	private int getColumnFromUser() {
+	private int getColumnFromUser() throws UserCancelledAction {
 		System.out.println("Select column to place plant on grid (indexed from 0)");
 
 		while (true) {
-			String columns = JOptionPane.showInputDialog(null, "Input place column", JOptionPane.QUESTION_MESSAGE);
-			if (columns == null) {
-				System.exit(0);
-			}
+			String columns = this.dialog.showInputDialog(null, "Input place column");
+      if (columns == null) {
+        throw new UserCancelledAction();
+      }
 			int column = Integer.parseInt(columns);
 
 			if (column >= 0 && column < this.game.getGrid().getLength()) {
 				return column;
 			} else {
-				JOptionPane.showMessageDialog(null, "Invalid column, try again");
+				this.dialog.showMessageDialog(null, "Invalid column, try again");
 			}
 		}
 	}
@@ -282,4 +296,22 @@ public class GameViewController implements ActionListener, Serializable {
 		GameViewController g = new GameViewController();
 		g.run();
 	}
+}
+
+class UserCancelledAction extends Exception {}
+
+interface Dialog {
+  String showInputDialog(Component parentComponent, Object message);
+  void showMessageDialog(Component parentComponent, Object message);
+}
+
+class GUIDialog implements Dialog {
+  public String showInputDialog(Component parentComponent, Object message) {
+    return JOptionPane.showInputDialog(parentComponent, message);
+  }
+
+  public void showMessageDialog(Component parentComponent, Object message) {
+    JOptionPane.showMessageDialog(parentComponent, message);
+    return;
+  }
 }
