@@ -67,6 +67,7 @@ public class GameViewController implements ActionListener, Serializable {
 		// Button action.
 		// (add five new buttons nut, rep,tnt, redo and undo button for milestone 3
 		String action = e.getActionCommand();
+    try {
 		switch (action) {
 		case "pea":
 		case "sun":
@@ -121,6 +122,14 @@ public class GameViewController implements ActionListener, Serializable {
 			loadFromDisk(path);
 			break;
 		}
+    } catch (UserCancelledAction ex) {
+      // Didn't run game turn on action cancelled.
+      // Remove from cancelled state from undo stack.
+      this.undoStack.pop();
+      // Continue at the same state.
+      return;
+
+    }
 		// everytime the actionPerformed render it to the gui
 		this.gameView.renderGrid(this.game.getGrid());
 		this.gameView.renderSunPoints(this.game.getSp());
@@ -157,21 +166,18 @@ public class GameViewController implements ActionListener, Serializable {
 
 	// add the model to the grid first
 	// if no plant to place direct pass the turn
-	private void userAction(String plantOption) {
+	private void userAction(String plantOption) throws UserCancelledAction {
 		if (this.game.getSp() < 50) {
 			JOptionPane.showMessageDialog(null, "You don't have enough Sun point, skip round");
-			;
 			return;
 		}
 
 		AbstractPlant plant = getPlant(plantOption);
 		if (plant == null) {
-
 			return;
-
 		}
-		int row, column;
 
+		int row, column;
 		while (true) {
 
 			row = getRowFromUser();
@@ -217,14 +223,14 @@ public class GameViewController implements ActionListener, Serializable {
 	}
 
 	// Get the row to place plants.
-	private int getRowFromUser() {
+	private int getRowFromUser() throws UserCancelledAction {
 		System.out.println("Select row to place plant on grid (indexed from 0)");
 
 		while (true) {
 			String rows = JOptionPane.showInputDialog(null, "Input place row", JOptionPane.QUESTION_MESSAGE);
-			if (rows == null) {
-				System.exit(0);
-			}
+      if (rows == null) {
+        throw new UserCancelledAction();
+      }
 			int row = Integer.parseInt(rows);
 			if (row >= 0 && row < this.game.getGrid().getHeight()) {
 				return row;
@@ -235,14 +241,14 @@ public class GameViewController implements ActionListener, Serializable {
 	}
 
 	// Get the column to place plants.
-	private int getColumnFromUser() {
+	private int getColumnFromUser() throws UserCancelledAction {
 		System.out.println("Select column to place plant on grid (indexed from 0)");
 
 		while (true) {
 			String columns = JOptionPane.showInputDialog(null, "Input place column", JOptionPane.QUESTION_MESSAGE);
-			if (columns == null) {
-				System.exit(0);
-			}
+      if (columns == null) {
+        throw new UserCancelledAction();
+      }
 			int column = Integer.parseInt(columns);
 
 			if (column >= 0 && column < this.game.getGrid().getLength()) {
@@ -283,3 +289,5 @@ public class GameViewController implements ActionListener, Serializable {
 		g.run();
 	}
 }
+
+class UserCancelledAction extends Exception {}
