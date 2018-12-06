@@ -43,7 +43,7 @@ public class Game implements Serializable {
 					if (model.getHp() <= 0) {
 						this.board.removeModel(model, i, j);
 						System.out.println("zombie died, new zombie coming");
-						spawnZombie(0);
+						spawnZombie(1);
 					} else {
 						zombieAction((AbstractZombie) model, i, j);
 						System.out.println("zombie at [" + i + "," + j + "], Hp = " + model.getHp());
