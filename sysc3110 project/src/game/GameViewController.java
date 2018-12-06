@@ -151,7 +151,7 @@ public class GameViewController implements ActionListener {
 
 	// serialize the state and save it to disk
 	// at the location provided 'path'
-	private void saveToDisk(String path) {
+	public void saveToDisk(String path) {
 		System.out.println("saving to: " + path);
 		SaveState s = new SaveState(game, undoStack, redoStack);
 		try {
@@ -171,7 +171,7 @@ public class GameViewController implements ActionListener {
 	// load the game view controller from disk
 	// from the location provided
 	// kill the old one, and start the newly imported one with run();
-	private void loadFromDisk(String path) {
+	public void loadFromDisk(String path) {
 		System.out.println("loading from: " + path);
 		SaveState s = null;
 		try {
