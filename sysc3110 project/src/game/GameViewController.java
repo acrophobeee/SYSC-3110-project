@@ -1,15 +1,16 @@
 package game;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
-import java.awt.Component;
 
 import model.AbstractPlant;
 import model.Bomb;
@@ -17,9 +18,10 @@ import model.Model;
 import model.Nut;
 import model.PeaShooter;
 import model.RePeater;
+import model.SaveState;
 import model.SunFlower;
 
-public class GameViewController implements ActionListener, Serializable {
+public class GameViewController implements ActionListener {
 
 	// Models
 	private Game game;
@@ -27,7 +29,7 @@ public class GameViewController implements ActionListener, Serializable {
 	private Stack<Game> redoStack;
 
 	// Views
-  private Dialog dialog;
+	private Dialog dialog;
 	private GameView gameView;
 
 	public Game getGame() {
@@ -58,7 +60,7 @@ public class GameViewController implements ActionListener, Serializable {
 		int rows = this.game.getGrid().getHeight();
 		int columns = this.game.getGrid().getLength();
 
-    this.dialog = new GUIDialog();
+		this.dialog = new GUIDialog();
 
 		this.gameView = new GameView(this, rows, columns);
 		this.gameView.renderGrid(this.game.getGrid());
@@ -75,69 +77,69 @@ public class GameViewController implements ActionListener, Serializable {
 		// Button action.
 		// (add five new buttons nut, rep,tnt, redo and undo button for milestone 3
 		String action = e.getActionCommand();
-    try {
-		switch (action) {
-		case "pea":
-		case "sun":
-		case "nut":
-		case "rep":
-		case "tnt":
-			addUndo();
-			userAction(action);
-			gameOver = this.game.runTurn();
-			break;
-		case "skip":
-			addUndo();
-			gameOver = this.game.runTurn();
-			break;
-		case "quit":
-			System.exit(0);
-		case "restart":
-			this.game = new Game();
-			break;
-		case "undo": // use stack to implement the redo and undo
-			if (this.undoStack.empty()) {
-				this.dialog.showMessageDialog(null, "Nothing to undo");
-				return;
-			} else {
-				undo();
-			}
-			break;
-		case "redo":
-			if (this.redoStack.empty()) {
-				this.dialog.showMessageDialog(null, "Nothing to redo");
-				return;
-			} else {
-				redo();
-			}
-			break;
-		case "save":
-			// save the current state
-			String path = this.dialog.showInputDialog(null, "Enter location to save to:");
-			if (path == null || path.isEmpty()) {
-				this.dialog.showMessageDialog(null, "Path must be non empty string");
+		try {
+			switch (action) {
+			case "pea":
+			case "sun":
+			case "nut":
+			case "rep":
+			case "tnt":
+				addUndo();
+				userAction(action);
+				gameOver = this.game.runTurn();
+				break;
+			case "skip":
+				addUndo();
+				gameOver = this.game.runTurn();
+				break;
+			case "quit":
+				System.exit(0);
+			case "restart":
+				this.game = new Game();
+				break;
+			case "undo": // use stack to implement the redo and undo
+				if (this.undoStack.empty()) {
+					this.dialog.showMessageDialog(null, "Nothing to undo");
+					return;
+				} else {
+					undo();
+				}
+				break;
+			case "redo":
+				if (this.redoStack.empty()) {
+					this.dialog.showMessageDialog(null, "Nothing to redo");
+					return;
+				} else {
+					redo();
+				}
+				break;
+			case "save":
+				// save the current state
+				String path = this.dialog.showInputDialog(null, "Enter location to save to:");
+				if (path == null || path.isEmpty()) {
+					this.dialog.showMessageDialog(null, "Path must be non empty string");
+					break;
+				}
+				saveToDisk(path);
+				break;
+			case "load":
+				// load the state from the file
+				path = this.dialog.showInputDialog(null, "Enter location to load from:");
+				if (path == null || path.isEmpty()) {
+					this.dialog.showMessageDialog(null, "Path must be non empty string");
+					break;
+				}
+				loadFromDisk(path);
 				break;
 			}
-			saveToDisk(path);
-			break;
-		case "load":
-			// load the state from the file
-			path = this.dialog.showInputDialog(null, "Enter location to load from:");
-			if (path == null || path.isEmpty()) {
-				this.dialog.showMessageDialog(null, "Path must be non empty string");
-				break;
-			}
-			loadFromDisk(path);
-			break;
-		}
-    } catch (UserCancelledAction ex) {
-      // Didn't run game turn on action cancelled.
-      // Remove from cancelled state from undo stack.
-      this.undoStack.pop();
-      // Continue at the same state.
-      return;
+		} catch (UserCancelledAction ex) {
+			// Didn't run game turn on action cancelled.
+			// Remove from cancelled state from undo stack.
+			this.undoStack.pop();
+			// Continue at the same state.
+			return;
 
-    }
+		}
 		// everytime the actionPerformed render it to the gui
 		this.gameView.renderGrid(this.game.getGrid());
 		this.gameView.renderSunPoints(this.game.getSp());
@@ -151,11 +153,12 @@ public class GameViewController implements ActionListener, Serializable {
 	// at the location provided 'path'
 	private void saveToDisk(String path) {
 		System.out.println("saving to: " + path);
+		SaveState s = new SaveState(game, undoStack, redoStack);
 		try {
 			// write serialized data to file at path
 			FileOutputStream fileOut = new FileOutputStream(path);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(this);
+			out.writeObject(s);
 			out.close();
 			fileOut.close();
 		} catch (IOException i) {
@@ -170,6 +173,19 @@ public class GameViewController implements ActionListener, Serializable {
 	// kill the old one, and start the newly imported one with run();
 	private void loadFromDisk(String path) {
 		System.out.println("loading from: " + path);
+		SaveState s = null;
+		try {
+			FileInputStream fileIn = new FileInputStream(path);
+			ObjectInputStream ois = new ObjectInputStream(fileIn);
+			s = (SaveState) ois.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+			this.dialog.showMessageDialog(null, "Loading failed, do you have proper file access?");
+		}
+		// s is now populated
+		this.game = s.getGame();
+		this.undoStack = s.getUndoStack();
+		this.redoStack = s.getRedoStack();
 	}
 
 	// add the model to the grid first
@@ -236,9 +252,9 @@ public class GameViewController implements ActionListener, Serializable {
 
 		while (true) {
 			String rows = this.dialog.showInputDialog(null, "Input place row");
-      if (rows == null) {
-        throw new UserCancelledAction();
-      }
+			if (rows == null) {
+				throw new UserCancelledAction();
+			}
 			int row = Integer.parseInt(rows);
 			if (row >= 0 && row < this.game.getGrid().getHeight()) {
 				return row;
@@ -254,9 +270,9 @@ public class GameViewController implements ActionListener, Serializable {
 
 		while (true) {
 			String columns = this.dialog.showInputDialog(null, "Input place column");
-      if (columns == null) {
-        throw new UserCancelledAction();
-      }
+			if (columns == null) {
+				throw new UserCancelledAction();
+			}
 			int column = Integer.parseInt(columns);
 
 			if (column >= 0 && column < this.game.getGrid().getLength()) {
@@ -298,20 +314,22 @@ public class GameViewController implements ActionListener, Serializable {
 	}
 }
 
-class UserCancelledAction extends Exception {}
+class UserCancelledAction extends Exception {
+}
 
 interface Dialog {
-  String showInputDialog(Component parentComponent, Object message);
-  void showMessageDialog(Component parentComponent, Object message);
+	String showInputDialog(Component parentComponent, Object message);
+
+	void showMessageDialog(Component parentComponent, Object message);
 }
 
 class GUIDialog implements Dialog {
-  public String showInputDialog(Component parentComponent, Object message) {
-    return JOptionPane.showInputDialog(parentComponent, message);
-  }
+	public String showInputDialog(Component parentComponent, Object message) {
+		return JOptionPane.showInputDialog(parentComponent, message);
+	}
 
-  public void showMessageDialog(Component parentComponent, Object message) {
-    JOptionPane.showMessageDialog(parentComponent, message);
-    return;
-  }
+	public void showMessageDialog(Component parentComponent, Object message) {
+		JOptionPane.showMessageDialog(parentComponent, message);
+		return;
+	}
 }
