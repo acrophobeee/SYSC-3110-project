@@ -106,7 +106,7 @@ public class GameControllerTest {
 	@Test
 	public void testLoadFromFileUpdatesState() {
 		String path = "testfile.ser";
-		Game tmp = new Game();
+		Game tmp = new Game(0);
 		tmp.setSp(69);
 		g.setGame(tmp);
 		g.saveToDisk(path);

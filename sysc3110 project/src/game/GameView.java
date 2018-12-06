@@ -19,8 +19,9 @@ import model.*;
 import javax.swing.*;
 
 public class GameView extends JFrame {
-	private JMenu opt;
+	private JMenu opt,level;
 	private JMenuItem quit, res, save, load;
+	private JMenuItem easy, medium, hard;
 	private JPanel pvz, info;
 	private JButton undo, redo, skip, sun, pea, nut, rep, tnt;
 	private JTextField point;
@@ -44,9 +45,24 @@ public class GameView extends JFrame {
 		Font f = new Font("Trial", Font.BOLD, 25);
 		// Create menu and menu item with restart and quit.
 		JMenuBar b = new JMenuBar();
-		opt = new JMenu("option");
+		opt = new JMenu("Option  ");
+		level=new JMenu("Level Selection");
 		opt.setFont(f);
+		level.setFont(f);
 		b.add(opt);
+		b.add(level);
+		easy = new JMenuItem("easy");
+		easy.addActionListener(al);
+		easy.setFont(f);
+		medium = new JMenuItem("medium");
+		medium.addActionListener(al);
+		medium.setFont(f);
+		hard = new JMenuItem("hard");
+		hard.addActionListener(al);
+		hard.setFont(f);
+		level.add(easy);
+		level.add(medium);
+		level.add(hard);
 		b.setPreferredSize(new Dimension(100, 50));
 		res = new JMenuItem("restart");
 		res.addActionListener(al);

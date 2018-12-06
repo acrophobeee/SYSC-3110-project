@@ -53,7 +53,7 @@ public class GameViewController implements ActionListener {
 	}
 
 	GameViewController() {
-		this.game = new Game();
+		this.game = new Game(0);
 		this.undoStack = new Stack<Game>();
 		this.redoStack = new Stack<Game>();
 
@@ -95,7 +95,13 @@ public class GameViewController implements ActionListener {
 			case "quit":
 				System.exit(0);
 			case "restart":
-				this.game = new Game();
+				this.game = new Game(0);
+				while(this.undoStack.empty() == false) {
+				this.undoStack.pop();
+				}
+				while(this.redoStack.empty() == false) {
+				this.redoStack.pop();
+				}
 				break;
 			case "undo": // use stack to implement the redo and undo
 				if (this.undoStack.empty()) {
@@ -122,6 +128,33 @@ public class GameViewController implements ActionListener {
 				}
 				saveToDisk(path);
 				break;
+			case "easy":
+				this.game = new Game(0);
+				while(this.undoStack.empty() == false) {
+				this.undoStack.pop();
+				}
+				while(this.redoStack.empty() == false) {
+				this.redoStack.pop();
+				}
+				break;
+			case "medium":
+				this.game = new Game(1);
+				while(this.undoStack.empty() == false) {
+				this.undoStack.pop();
+				}
+				while(this.redoStack.empty() == false) {
+				this.redoStack.pop();
+				}
+				break;
+			case "hard":
+				this.game = new Game(2);
+				while(this.undoStack.empty() == false) {
+				this.undoStack.pop();
+				}
+				while(this.redoStack.empty() == false) {
+				this.redoStack.pop();
+				}
+				break;	
 			case "load":
 				// load the state from the file
 				path = this.dialog.showInputDialog(null, "Enter location to load from:");

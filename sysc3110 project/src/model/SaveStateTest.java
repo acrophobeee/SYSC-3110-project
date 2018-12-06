@@ -16,7 +16,7 @@ public class SaveStateTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Game g = new Game();
+		Game g = new Game(0);
 		s = new SaveState(g, new Stack<Game>(), new Stack<Game>());
 	}
 
@@ -26,7 +26,7 @@ public class SaveStateTest {
 
 	@Test
 	public void testSaveState() {
-		Game g = new Game();
+		Game g = new Game(0);
 		g.setSp(1);
 		s = new SaveState(g, null, null);
 		assert (s.getGame().getSp() == 1);
@@ -39,7 +39,7 @@ public class SaveStateTest {
 
 	@Test
 	public void testSetGame() {
-		Game g = new Game();
+		Game g = new Game(0);
 		g.setSp(1);
 		s.setGame(g);
 		assert (s.getGame().getSp() == 1);
