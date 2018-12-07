@@ -164,7 +164,7 @@ public class Game implements Serializable {
 	}
 
 	/*
-	 * spawn a zombie in column 10 and in random row.
+	 * spawn zombie in column 10 and in random row with 3 levels
 	 */
 	private void spawnZombie(int choose) {
 		switch (choose) {
