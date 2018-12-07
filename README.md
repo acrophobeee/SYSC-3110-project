@@ -17,6 +17,11 @@ An example of this flow can be seen when a user clicks on a plant.
 1. Afterward the controller updates the model with the new plant on the `Game`'s grid.
 1. The controller is now able to tell the view to rerender with the new game grid.
 
+## User-visible change
+
+Add three levels to the game and add three button to select the levels, also add a save and a load button the save and load the
+game.
+
 ## UML and SEQ diagram change
 
 added the save state class and the test of save state and game view controll to the uml diagram. added the save
