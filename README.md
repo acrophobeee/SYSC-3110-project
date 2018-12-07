@@ -17,6 +17,16 @@ An example of this flow can be seen when a user clicks on a plant.
 1. Afterward the controller updates the model with the new plant on the `Game`'s grid.
 1. The controller is now able to tell the view to rerender with the new game grid.
 
+## UML and SEQ diagram change
+
+added the save state class and the test of save state and game view controll to the uml diagram. added the save
+state to the SEQ diagram.
+
+## Issues
+
+(May not be an Issues)The level of the game will increase while killing a zombie, and stay at the highest level, and the zombie
+will increase unlimited.
+
 ## Milestone 3
 
 ### User-visible change
