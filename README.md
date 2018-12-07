@@ -19,7 +19,7 @@ An example of this flow can be seen when a user clicks on a plant.
 
 ## User-visible change
 
-Add three levels to the game and add three button to select the levels, also add a save and a load button the save and load the
+Add three levels to the game and add three button to select the levels, also add a save and a load button to save and load the
 game.
 
 ## UML and SEQ diagram change
